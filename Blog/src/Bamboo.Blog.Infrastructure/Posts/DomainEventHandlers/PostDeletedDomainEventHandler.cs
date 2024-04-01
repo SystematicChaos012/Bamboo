@@ -7,7 +7,7 @@ namespace Bamboo.Posts.DomainEventHandlers
     /// <summary>
     /// Post 删除领域事件
     /// </summary>
-    public sealed class PostDeletedDomainEventHandler(PostDbContext dbContext) : INotificationHandler<PostDeletedDomainEvent>
+    public sealed class PostDeletedDomainEventHandler(BlogDbContext dbContext) : INotificationHandler<PostDeletedDomainEvent>
     {
         public async Task Handle(PostDeletedDomainEvent notification, CancellationToken cancellationToken)
         {

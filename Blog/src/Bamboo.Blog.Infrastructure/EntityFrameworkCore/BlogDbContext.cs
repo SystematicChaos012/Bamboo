@@ -7,11 +7,11 @@ namespace Bamboo.EntityFrameworkCore
     /// <summary>
     /// Post 数据上下文
     /// </summary>
-    public sealed class PostDbContext(DbContextOptions<PostDbContext> options) : DbContext(options)
+    public sealed class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(options)
     {
         public PostTransactionScope Scope { get; } = null!;
 
-        public PostDbContext(DbContextOptions<PostDbContext> options, PostTransactionScope scope) : this(options)
+        public BlogDbContext(DbContextOptions<BlogDbContext> options, PostTransactionScope scope) : this(options)
         {
             Scope = scope;
         }

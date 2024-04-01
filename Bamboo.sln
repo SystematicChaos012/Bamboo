@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "Common\Shar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{DCB6293E-0D96-4647-BFAE-F66BFBF272D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Posts.Domain", "Post\src\Bamboo.Posts.Domain\Bamboo.Posts.Domain.csproj", "{9BFBAE36-E09C-45E7-BA94-0218D3A86BDE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Posts.Infrastructure", "Post\src\Bamboo.Posts.Infrastructure\Bamboo.Posts.Infrastructure.csproj", "{19B41C37-D5AE-4E39-B840-AA953C918C25}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OptionalComponents", "OptionalComponents", "{0E9DECB2-1654-44AD-A93A-51A326F4422D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FE9C308D-6F2F-416C-B1DF-BC9D74AA4FBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Blog.Domain", "Blog\src\Bamboo.Blog.Domain\Bamboo.Blog.Domain.csproj", "{B3CCDC61-2E03-43A8-B53B-4FA78DB83E27}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Blog.Infrastructure", "Blog\src\Bamboo.Blog.Infrastructure\Bamboo.Blog.Infrastructure.csproj", "{1FCFB547-E3AE-4999-B161-1211D022F382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,22 +27,22 @@ Global
 		{ACD9EA02-85B7-4B0D-A1D4-1FC5BBA390A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACD9EA02-85B7-4B0D-A1D4-1FC5BBA390A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACD9EA02-85B7-4B0D-A1D4-1FC5BBA390A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BFBAE36-E09C-45E7-BA94-0218D3A86BDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BFBAE36-E09C-45E7-BA94-0218D3A86BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BFBAE36-E09C-45E7-BA94-0218D3A86BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BFBAE36-E09C-45E7-BA94-0218D3A86BDE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19B41C37-D5AE-4E39-B840-AA953C918C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19B41C37-D5AE-4E39-B840-AA953C918C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19B41C37-D5AE-4E39-B840-AA953C918C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19B41C37-D5AE-4E39-B840-AA953C918C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3CCDC61-2E03-43A8-B53B-4FA78DB83E27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3CCDC61-2E03-43A8-B53B-4FA78DB83E27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3CCDC61-2E03-43A8-B53B-4FA78DB83E27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3CCDC61-2E03-43A8-B53B-4FA78DB83E27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FCFB547-E3AE-4999-B161-1211D022F382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FCFB547-E3AE-4999-B161-1211D022F382}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FCFB547-E3AE-4999-B161-1211D022F382}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FCFB547-E3AE-4999-B161-1211D022F382}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ACD9EA02-85B7-4B0D-A1D4-1FC5BBA390A4} = {2B163B87-76F3-4593-9073-E012CC0FCC89}
-		{9BFBAE36-E09C-45E7-BA94-0218D3A86BDE} = {DCB6293E-0D96-4647-BFAE-F66BFBF272D4}
-		{19B41C37-D5AE-4E39-B840-AA953C918C25} = {DCB6293E-0D96-4647-BFAE-F66BFBF272D4}
+		{B3CCDC61-2E03-43A8-B53B-4FA78DB83E27} = {DCB6293E-0D96-4647-BFAE-F66BFBF272D4}
+		{1FCFB547-E3AE-4999-B161-1211D022F382} = {DCB6293E-0D96-4647-BFAE-F66BFBF272D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3E02840-1DAE-4358-AE18-851B748E763F}
