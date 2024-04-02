@@ -9,6 +9,11 @@ namespace Bamboo.EntityFrameworkCore
     /// </summary>
     public sealed class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(options)
     {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
+
         protected override void OnModelCreating(ModelBuilder mb)
         {
             mb.Entity<Post>(p =>

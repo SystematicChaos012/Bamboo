@@ -1,9 +1,9 @@
 ﻿namespace SharedKernel.Domain.Audit
 {
     /// <summary>
-    /// 修改审计
+    /// 创建审计
     /// </summary>
-    public interface IModificationAudit
+    public interface IHasCreationTime
     {
     }
 }

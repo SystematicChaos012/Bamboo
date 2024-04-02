@@ -1,9 +1,9 @@
 ﻿namespace SharedKernel.Domain.Audit
 {
     /// <summary>
-    /// 创建审计
+    /// 软删除
     /// </summary>
-    public interface ICreationAudit
+    public interface IHasDeletedFlag
     {
     }
 }

@@ -31,21 +31,21 @@ namespace SharedKernel.EntityFrameworkCore
 
         public static EntityTypeBuilder<TEntity> HasAuditProperties<TEntity>(this EntityTypeBuilder<TEntity> builder) where TEntity : class
         {
-            if (typeof(TEntity).IsAssignableFrom(typeof(ISoftDeleteAudit)))
+            if (typeof(TEntity).IsAssignableFrom(typeof(IHasDeletedFlag)))
             {
-                Expression<Func<TEntity, bool>> expression = p => !EF.Property<bool>(p, nameof(SoftDeleteAudit.IsDeleted));
-                builder.Property<bool>(nameof(SoftDeleteAudit.IsDeleted)).IsRequired();
+                Expression<Func<TEntity, bool>> expression = p => !EF.Property<bool>(p, AuditConsts.DELETED_FLAG_NAME);
+                builder.Property<bool>(AuditConsts.DELETED_FLAG_NAME).IsRequired();
                 builder.HasQueryFilter(expression);
             }
 
-            if (typeof(TEntity).IsAssignableFrom(typeof(ICreationAudit)))
+            if (typeof(TEntity).IsAssignableFrom(typeof(IHasCreationTime)))
             {
-                builder.Property<DateTime>(nameof(CreationAudit.CreationTime)).IsRequired();
+                builder.Property<DateTime>(AuditConsts.CREATION_TIME_NAME).IsRequired();
             }
 
-            if (typeof(TEntity).IsAssignableFrom(typeof(IModificationAudit)))
+            if (typeof(TEntity).IsAssignableFrom(typeof(IHasModificationTime)))
             {
-                builder.Property<DateTime>(nameof(ModificationAudit.ModificationTime)).IsRequired();
+                builder.Property<DateTime>(AuditConsts.MODIFICATION_TIME_NAME).IsRequired();
             }
 
             return builder;

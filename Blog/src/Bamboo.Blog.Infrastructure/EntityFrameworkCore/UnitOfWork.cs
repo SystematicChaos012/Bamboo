@@ -41,19 +41,19 @@ namespace Bamboo.EntityFrameworkCore
             // 审计
             foreach (var entry in dbContext.ChangeTracker.Entries<IAggregateRoot>())
             {
-                if (entry is { State: EntityState.Added, Entity: ICreationAudit })
+                if (entry is { State: EntityState.Added, Entity: IHasCreationTime })
                 {
-                    entry.Property<DateTime>(nameof(CreationAudit.CreationTime)).CurrentValue = DateTime.UtcNow;
+                    entry.Property<DateTime>(nameof(AuditConsts.CreationTime)).CurrentValue = DateTime.UtcNow;
                     continue;
                 }
 
-                if (entry is { State: EntityState.Modified, Entity: IModificationAudit })
+                if (entry is { State: EntityState.Modified, Entity: IHasModificationTime })
                 {
                     entry.Property<DateTime>(nameof(ModificationAudit.ModificationTime)).CurrentValue = DateTime.UtcNow;
                     continue;
                 }
 
-                if (entry is { State: EntityState.Deleted, Entity: ISoftDeleteAudit })
+                if (entry is { State: EntityState.Deleted, Entity: IHasDeletedFlag })
                 {
                     entry.State = EntityState.Modified;
                     entry.Property<bool>(nameof(SoftDeleteAudit.IsDeleted)).CurrentValue = true;

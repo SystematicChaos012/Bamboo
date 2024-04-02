@@ -1,9 +1,9 @@
 ﻿namespace SharedKernel.Domain.Audit
 {
     /// <summary>
-    /// 软删除
+    /// 修改审计
     /// </summary>
-    public interface ISoftDeleteAudit
+    public interface IHasModificationTime
     {
     }
 }
