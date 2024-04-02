@@ -15,7 +15,7 @@ namespace SharedKernel.EntityFrameworkCore
         /// This method is used to add a query filter to this entity which combine with ABP EF Core builtin query filters.
         /// </summary>
         /// <returns></returns>
-        public static EntityTypeBuilder<TEntity> HasQueryFilter<TEntity>(this EntityTypeBuilder<TEntity> builder, Expression<Func<TEntity, bool>> filter)
+        private static EntityTypeBuilder<TEntity> HasQueryFilter<TEntity>(this EntityTypeBuilder<TEntity> builder, Expression<Func<TEntity, bool>> filter)
             where TEntity : class
         {
 #pragma warning disable EF1001
@@ -35,7 +35,7 @@ namespace SharedKernel.EntityFrameworkCore
             {
                 Expression<Func<TEntity, bool>> expression = p => !EF.Property<bool>(p, AuditConsts.DELETED_FLAG_NAME);
                 builder.Property<bool>(AuditConsts.DELETED_FLAG_NAME).IsRequired();
-                builder.HasQueryFilter(expression);
+                HasQueryFilter(builder, expression);
             }
 
             if (typeof(TEntity).IsAssignableFrom(typeof(IHasCreationTime)))
