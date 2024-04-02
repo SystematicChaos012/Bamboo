@@ -1,12 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SharedKernel.Domain;
-using SharedKernel.Domain.Audit;
+﻿using SharedKernel.Domain;
 using SharedKernel.UnitOfWork;
+using SharedKernel.EntityFrameworkCore;
 
 namespace Bamboo.EntityFrameworkCore
 {
     /// <inheritdoc/>
-    public sealed class UnitOfWork(BlogDbContext dbContext) : IUnitOfWork
+    public sealed class UnitOfWork(BlogDbContext dbContext) : IUnitOfWork, IDisposable
     {
         /// <inheritdoc/>
         public Task CommitAsync(CancellationToken cancellationToken = default)
@@ -38,30 +37,12 @@ namespace Bamboo.EntityFrameworkCore
                 await dbContext.Database.BeginTransactionAsync(cancellationToken);
             }
 
-            // 审计
-            foreach (var entry in dbContext.ChangeTracker.Entries<IAggregateRoot>())
-            {
-                if (entry is { State: EntityState.Added, Entity: IHasCreationTime })
-                {
-                    entry.Property<DateTime>(nameof(AuditConsts.CreationTime)).CurrentValue = DateTime.UtcNow;
-                    continue;
-                }
+            dbContext.ChangeTracker.Entries<IAggregateRoot>().UpdateAuditProperties();
+        }
 
-                if (entry is { State: EntityState.Modified, Entity: IHasModificationTime })
-                {
-                    entry.Property<DateTime>(nameof(ModificationAudit.ModificationTime)).CurrentValue = DateTime.UtcNow;
-                    continue;
-                }
-
-                if (entry is { State: EntityState.Deleted, Entity: IHasDeletedFlag })
-                {
-                    entry.State = EntityState.Modified;
-                    entry.Property<bool>(nameof(SoftDeleteAudit.IsDeleted)).CurrentValue = true;
-                    continue;
-                }
-            }
-
-            
+        public void Dispose()
+        {
+            dbContext.Database.CurrentTransaction?.Dispose();
         }
     }
 }

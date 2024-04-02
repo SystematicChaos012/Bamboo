@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Blog.Domain", "Micro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Blog.Infrastructure", "MicroServices\Blog\src\Bamboo.Blog.Infrastructure\Bamboo.Blog.Infrastructure.csproj", "{F9F30A11-EFDB-4510-85C9-4B1F8C71B338}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bamboo.Identity.Domain", "MicroServices\Identity\src\Bamboo.Identity.Domain\Bamboo.Identity.Domain.csproj", "{40E64C38-CBA3-4EBD-A44A-D4F58CFB8ACB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{F9F30A11-EFDB-4510-85C9-4B1F8C71B338}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9F30A11-EFDB-4510-85C9-4B1F8C71B338}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9F30A11-EFDB-4510-85C9-4B1F8C71B338}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40E64C38-CBA3-4EBD-A44A-D4F58CFB8ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40E64C38-CBA3-4EBD-A44A-D4F58CFB8ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40E64C38-CBA3-4EBD-A44A-D4F58CFB8ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40E64C38-CBA3-4EBD-A44A-D4F58CFB8ACB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 		{AABB6EF2-60CE-4D66-9D84-131413D989E6} = {2D34DD35-B67D-4A63-82B5-C8610C2C69C9}
 		{FC0031AD-9EFC-435E-B2AF-48B1B6B0C9C5} = {DCB6293E-0D96-4647-BFAE-F66BFBF272D4}
 		{F9F30A11-EFDB-4510-85C9-4B1F8C71B338} = {DCB6293E-0D96-4647-BFAE-F66BFBF272D4}
+		{40E64C38-CBA3-4EBD-A44A-D4F58CFB8ACB} = {AABB6EF2-60CE-4D66-9D84-131413D989E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3E02840-1DAE-4358-AE18-851B748E763F}
