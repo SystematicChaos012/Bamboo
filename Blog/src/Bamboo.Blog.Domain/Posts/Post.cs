@@ -1,12 +1,13 @@
 ﻿using Bamboo.Posts.DomainEvents.V1;
 using SharedKernel.Domain;
+using SharedKernel.Domain.Audit;
 
 namespace Bamboo.Posts
 {
     /// <summary>
     /// 文章
     /// </summary>
-    public sealed partial class Post : AggregateRoot<Guid>
+    public sealed partial class Post : AggregateRoot<Guid>, ICreationAudit, IModificationAudit, ISoftDeleteAudit
     {
         /// <summary>
         /// 标题
@@ -29,11 +30,6 @@ namespace Bamboo.Posts
         public DateTime PublicationTime { get; private set; }
 
         /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreationTime { get; private set; }
-
-        /// <summary>
         /// Used by EF Core
         /// </summary>
         private Post() { }
@@ -41,8 +37,8 @@ namespace Bamboo.Posts
         /// <summary>
         /// 创建 Post
         /// </summary>
-        public Post(Guid id, string title, string content, Guid authorId, DateTime publicationTime, DateTime creationTime) => 
-            RaiseEvent(new PostCreatedDomainEvent(id, title, content, authorId, publicationTime, creationTime));
+        public Post(Guid id, string title, string content, Guid authorId, DateTime publicationTime) => 
+            RaiseEvent(new PostCreatedDomainEvent(id, title, content, authorId, publicationTime));
 
         /// <summary>
         /// 删除文章
@@ -53,6 +49,6 @@ namespace Bamboo.Posts
     partial class Post : IDomainEventApplier<PostCreatedDomainEvent>
     {
         void IDomainEventApplier<PostCreatedDomainEvent>.Apply(PostCreatedDomainEvent domainEvent) =>
-            (Id, Title, Content, AuthorId, PublicationTime, CreationTime) = domainEvent;
+            (Id, Title, Content, AuthorId, PublicationTime) = domainEvent;
     }
 }

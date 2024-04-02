@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Blog.Domain", "Blog\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bamboo.Blog.Infrastructure", "Blog\src\Bamboo.Blog.Infrastructure\Bamboo.Blog.Infrastructure.csproj", "{1FCFB547-E3AE-4999-B161-1211D022F382}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.EntityFrameworkCore", "Common\SharedKernel.EntityFrameworkCore\SharedKernel.EntityFrameworkCore.csproj", "{04FE69FB-AEAC-4284-887D-46AEB1F28591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{1FCFB547-E3AE-4999-B161-1211D022F382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FCFB547-E3AE-4999-B161-1211D022F382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FCFB547-E3AE-4999-B161-1211D022F382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FE69FB-AEAC-4284-887D-46AEB1F28591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FE69FB-AEAC-4284-887D-46AEB1F28591}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FE69FB-AEAC-4284-887D-46AEB1F28591}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FE69FB-AEAC-4284-887D-46AEB1F28591}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{ACD9EA02-85B7-4B0D-A1D4-1FC5BBA390A4} = {2B163B87-76F3-4593-9073-E012CC0FCC89}
 		{B3CCDC61-2E03-43A8-B53B-4FA78DB83E27} = {DCB6293E-0D96-4647-BFAE-F66BFBF272D4}
 		{1FCFB547-E3AE-4999-B161-1211D022F382} = {DCB6293E-0D96-4647-BFAE-F66BFBF272D4}
+		{04FE69FB-AEAC-4284-887D-46AEB1F28591} = {2B163B87-76F3-4593-9073-E012CC0FCC89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3E02840-1DAE-4358-AE18-851B748E763F}

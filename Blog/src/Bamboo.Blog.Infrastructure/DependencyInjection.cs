@@ -1,5 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Bamboo.EntityFrameworkCore;
+using Bamboo.Posts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SharedKernel.UnitOfWork;
 
 namespace Bamboo
 {
@@ -13,6 +17,22 @@ namespace Bamboo
         /// </summary>
         public static IServiceCollection AddPosts(this IServiceCollection services, IConfiguration configuration)
         {
+            // Mediator
+            services.AddMediatR(options => 
+            {
+                options.RegisterServicesFromAssemblies([
+                        typeof(Post).Assembly,
+                        typeof(DependencyInjection).Assembly
+                    ]);
+            });
+
+            // 添加 BlogDbContext
+            services.AddDbContext<BlogDbContext>(options => 
+                options.UseSqlServer(configuration.GetConnectionString("Blog")), ServiceLifetime.Scoped);
+
+            // 添加 UnitOfWork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             return services;
         }
     }
