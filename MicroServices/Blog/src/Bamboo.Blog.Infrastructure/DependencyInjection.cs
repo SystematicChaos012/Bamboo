@@ -15,7 +15,7 @@ namespace Bamboo
         /// <summary>
         /// 添加 Post 服务
         /// </summary>
-        public static IServiceCollection AddPosts(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddBlogService(this IServiceCollection services, IConfiguration configuration)
         {
             // Mediator
             services.AddMediatR(options => 
