@@ -1,13 +1,12 @@
 ﻿using Bamboo.Posts.DomainEvents;
 using SharedKernel.Domain;
-using SharedKernel.Domain.Audit;
 
 namespace Bamboo.Posts
 {
     /// <summary>
     /// 文章
     /// </summary>
-    public sealed partial class Post : AggregateRoot<Guid>, IHasCreationTime, IHasModificationTime, IHasDeletedFlag
+    public sealed partial class Post : AggregateRoot<Guid>
     {
         /// <summary>
         /// 标题
