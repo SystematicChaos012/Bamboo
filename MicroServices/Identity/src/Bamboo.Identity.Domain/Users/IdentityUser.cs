@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SharedKernel.Domain;
 
 namespace Bamboo.Identity
 {
     /// <summary>
     /// 用户信息
     /// </summary>
-    public class IdentityUser
+    public class IdentityUser : AggregateRoot<Guid>
     {
         /// <summary>
         /// Gets or sets the primary key for this user.
         /// </summary>
         [PersonalData]
-        public Guid Id { get; }
+        public override Guid Id { get; protected set; }
 
         /// <summary>
         /// Gets or sets the user name for this user.
@@ -54,7 +55,7 @@ namespace Bamboo.Identity
         /// <summary>
         /// A random value that must change whenever a user is persisted to the store
         /// </summary>
-        public string? ConcurrencyStamp { get; private set; } = Guid.NewGuid().ToString();
+        public string? ConcurrencyStamp { get; private set; }
 
         /// <summary>
         /// Gets or sets a telephone number for the user.

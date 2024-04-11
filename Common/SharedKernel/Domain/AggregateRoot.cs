@@ -19,7 +19,7 @@ namespace SharedKernel.Domain
         /// <summary>
         /// 主键
         /// </summary>
-        public TKey Id { get; protected set; } = default!;
+        public virtual TKey Id { get; protected set; } = default!;
 
         /// <inheritdoc/>
         void IAggregateRoot.ClearDomainEvents()
