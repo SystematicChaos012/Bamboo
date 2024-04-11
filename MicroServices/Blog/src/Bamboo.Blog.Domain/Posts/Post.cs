@@ -1,4 +1,4 @@
-﻿using Bamboo.Posts.DomainEvents.V1;
+﻿using Bamboo.Posts.DomainEvents;
 using SharedKernel.Domain;
 using SharedKernel.Domain.Audit;
 

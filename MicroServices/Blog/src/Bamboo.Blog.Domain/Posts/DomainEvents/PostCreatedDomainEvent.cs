@@ -1,6 +1,6 @@
 ﻿using SharedKernel.Domain;
 
-namespace Bamboo.Posts.DomainEvents.V1
+namespace Bamboo.Posts.DomainEvents
 {
     /// <summary>
     /// Post 创建领域事件

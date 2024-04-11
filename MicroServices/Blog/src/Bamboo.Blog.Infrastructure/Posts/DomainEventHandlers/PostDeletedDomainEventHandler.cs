@@ -1,5 +1,5 @@
 ﻿using Bamboo.EntityFrameworkCore;
-using Bamboo.Posts.DomainEvents.V1;
+using Bamboo.Posts.DomainEvents;
 using MediatR;
 
 namespace Bamboo.Posts.DomainEventHandlers

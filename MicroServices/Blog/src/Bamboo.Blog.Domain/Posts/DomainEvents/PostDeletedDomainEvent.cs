@@ -1,6 +1,6 @@
 ﻿using SharedKernel.Domain;
 
-namespace Bamboo.Posts.DomainEvents.V1
+namespace Bamboo.Posts.DomainEvents
 {
     /// <summary>
     /// Post 删除领域事件
