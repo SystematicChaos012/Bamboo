@@ -3,7 +3,7 @@
     /// <summary>
     /// 具有创建者的审计
     /// </summary>
-    public interface IHasCreator<T, TKey>
+    public interface IHasCreator<TKey>
     {
         /// <summary>
         /// 名称

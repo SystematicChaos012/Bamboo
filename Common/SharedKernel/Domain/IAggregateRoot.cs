@@ -18,13 +18,13 @@
         /// <summary>
         /// 清理所有领域事件
         /// </summary>
-        public void ClearDomainEvents();
+        void ClearDomainEvents();
 
         /// <summary>
         /// 触发事件
         /// </summary>
         /// <typeparam name="T">事件类型</typeparam>
         /// <param name="domainEvent">事件实例</param>
-        public void RaiseEvent<T>(T domainEvent) where T : DomainEvent;
+        void RaiseEvent<T>(T domainEvent) where T : DomainEvent;
     }
 }

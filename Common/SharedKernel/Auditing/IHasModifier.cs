@@ -3,7 +3,7 @@
     /// <summary>
     /// 具有修改者的审计
     /// </summary>
-    public interface IHasModifier<T, TKey>
+    public interface IHasModifier<TKey>
     {
         /// <summary>
         /// 名称

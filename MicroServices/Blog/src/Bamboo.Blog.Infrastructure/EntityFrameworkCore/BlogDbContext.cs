@@ -13,9 +13,9 @@ namespace Bamboo.EntityFrameworkCore
             base.OnConfiguring(optionsBuilder);
         }
 
-        protected override void OnModelCreating(ModelBuilder mb)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            mb.Entity<Post>(p =>
+            builder.Entity<Post>(p =>
             {
                 p.ToTable("Posts", "Blog");
 
@@ -27,7 +27,7 @@ namespace Bamboo.EntityFrameworkCore
                 p.Property(p => p.AuthorId).IsRequired();
                 p.Property(p => p.PublicationTime).IsRequired();
 
-                p.HasAuditProperties();
+                p.HasAuditingProperties();
             });
         }
     }

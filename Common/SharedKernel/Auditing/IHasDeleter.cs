@@ -3,7 +3,7 @@
     /// <summary>
     /// 具有删除者的审计
     /// </summary>
-    public interface IHasDeleter<T, TKey>
+    public interface IHasDeleter<TKey>
     {
         /// <summary>
         /// 名称

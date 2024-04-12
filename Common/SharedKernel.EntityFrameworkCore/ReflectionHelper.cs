@@ -23,16 +23,22 @@ namespace Bamboo
             return args[sequenceNumber - 1];
         }
 
-        // 获取或创建一个通过反射获取的静态方法编译的委托
-        public static Func<T, TReturn> GetOrCreatePropertyGetter<T, TReturn>(Type type, string propertyName, BindingFlags bindingFlags)
+        /// <summary>
+        /// 从接口静态属性中获取值
+        /// </summary>
+        public static TValue GetValueFromInterfaceStaticProperty<TValue>(Type interfaceType, string propertyName)
         {
-            var property = type.GetProperty(propertyName, bindingFlags) 
-                ?? throw new ArgumentException($"Property {propertyName} not found in {type.FullName}");
+            var property = interfaceType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty) 
+                ?? throw new InvalidOperationException($"invalid property in '{interfaceType.Name}' type");
 
-            var method = property.GetGetMethod() 
-                ?? throw new ArgumentException($"Property {propertyName} does not have a getter in {type.FullName}");
+            var getter = property.GetMethod!;
 
-            return (Func<T, TReturn>)method.CreateDelegate(typeof(Func<T, TReturn>));
+            if (getter.ReturnType != typeof(TValue))
+            {
+                throw new InvalidOperationException($"invalid return type of '{propertyName}' property in '{interfaceType.Name}' type");
+            }
+
+            return (TValue)property.GetMethod!.Invoke(null, [])!;
         }
     }
 }
