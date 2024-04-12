@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Solution Items/" />
+  <Folder Name="/OptionalComponents/" />
+  <Folder Name="/MicroServices/Identity/">
+    <Project Path="MicroServices\Identity\src\Bamboo.Identity.Domain\Bamboo.Identity.Domain.csproj" />
+    <Project Path="MicroServices\Identity\src\Bamboo.Identity.Infrastructure\Bamboo.Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/MicroServices/Blog/">
+    <Project Path="MicroServices\Blog\src\Bamboo.Blog.Domain\Bamboo.Blog.Domain.csproj" />
+    <Project Path="MicroServices\Blog\src\Bamboo.Blog.Infrastructure\Bamboo.Blog.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/MicroServices/" />
+  <Folder Name="/Common/">
+    <Project Path="Common\SharedKernel.EntityFrameworkCore\SharedKernel.EntityFrameworkCore.csproj" />
+    <Project Path="Common\SharedKernel\SharedKernel.csproj" />
+  </Folder>
+</Solution>
