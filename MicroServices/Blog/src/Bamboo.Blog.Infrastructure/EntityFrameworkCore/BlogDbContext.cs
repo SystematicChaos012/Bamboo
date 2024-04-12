@@ -1,6 +1,5 @@
 ﻿using Bamboo.Posts;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel.EntityFrameworkCore;
 
 namespace Bamboo.EntityFrameworkCore
 {
