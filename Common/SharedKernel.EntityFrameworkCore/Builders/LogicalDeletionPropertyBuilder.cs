@@ -15,7 +15,7 @@ namespace Bamboo.Builders
         }
 
         private static LogicalDeletionPropertyBuilder<TEntity>? _instance;
-        public static IPropertyBuilderWithCache<TEntity> GetOrCreate(Type interfaceType)
+        public static IPropertyBuilder<TEntity> GetOrCreate(Type interfaceType)
         {
             return _instance ??= new LogicalDeletionPropertyBuilder<TEntity>();
         }

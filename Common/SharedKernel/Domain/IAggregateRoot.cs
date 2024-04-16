@@ -1,15 +1,12 @@
-﻿namespace SharedKernel.Domain
+﻿using SharedKernel.Auditing;
+
+namespace SharedKernel.Domain
 {
     /// <summary>
     /// 聚合根
     /// </summary>
-    public interface IAggregateRoot
+    public interface IAggregateRoot : IHasVersion
     {
-        /// <summary>
-        /// 版本
-        /// </summary>
-        int Version { get; }
-
         /// <summary>
         /// 领域事件
         /// </summary>

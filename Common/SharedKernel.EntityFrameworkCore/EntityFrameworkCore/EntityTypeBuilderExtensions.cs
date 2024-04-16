@@ -46,52 +46,41 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         private static IEnumerable<IPropertyBuilder<TEntity>> GetBuilders<TEntity>(Type entityType) where TEntity : class
         {
+            HashSet<Type> exists = [];
+
             foreach (var i in entityType.GetInterfaces())
             {
                 // 获取定义
-                var definition = i.GetGenericTypeDefinition();
+                var definition = i.IsGenericType ? i.GetGenericTypeDefinition() : i;
+
+                if (exists.Contains(definition))
+                    continue;
+
+                if (definition == typeof(IHasVersion))
+                    yield return VersionPropertyBuilder<TEntity>.GetOrCreate(i);
 
                 if (definition == typeof(IHasCreationTime))
-                {
                     yield return CreationTimePropertyBuilder<TEntity>.GetOrCreate(i);
-                    continue;
-                }
 
                 if (definition == typeof(IHasCreator<>))
-                {
                     yield return CreatorPropertyBuilder<TEntity>.GetOrCreate(i);
-                    continue;
-                }
 
                 if (definition == typeof(IHasModificationTime))
-                {
                     yield return ModificationTimePropertyBuilder<TEntity>.GetOrCreate(i);
-                    continue;
-                }
 
                 if (definition == typeof(IHasModifier<>))
-                {
                     yield return ModifierPropertyBuilder<TEntity>.GetOrCreate(i);
-                    continue;
-                }
 
                 if (definition == typeof(IHasDeletionTime))
-                {
                     yield return DeletionTimePropertyBuilder<TEntity>.GetOrCreate(i);
-                    continue;
-                }
 
                 if (definition == typeof(IHasDeleter<>))
-                {
                     yield return DeleterPropertyBuilder<TEntity>.GetOrCreate(i);
-                    continue;
-                }
 
                 if (definition == typeof(IHasLogicalDeletion))
-                {
                     yield return LogicalDeletionPropertyBuilder<TEntity>.GetOrCreate(i);
-                    continue;
-                }
+
+                exists.Add(definition);
             }
         }
     }

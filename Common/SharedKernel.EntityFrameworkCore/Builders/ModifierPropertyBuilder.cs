@@ -25,7 +25,7 @@ namespace Bamboo.Builders
         }
 
         private static ModifierPropertyBuilder<TEntity>? _instance;
-        public static IPropertyBuilderWithCache<TEntity> GetOrCreate(Type interfaceType)
+        public static IPropertyBuilder<TEntity> GetOrCreate(Type interfaceType)
         {
             return _instance ??= new ModifierPropertyBuilder<TEntity>(ReflectionHelper.GetGenericArgumentType(interfaceType, 1)!);
         }

@@ -4,20 +4,22 @@ using SharedKernel.Auditing;
 namespace Bamboo.Builders
 {
     /// <summary>
-    /// 删除审计属性
+    /// 版本审计
     /// </summary>
-    public class DeletionTimePropertyBuilder<TEntity> : IPropertyBuilderWithCache<TEntity> where TEntity : class
+    public class VersionPropertyBuilder<TEntity> : IPropertyBuilderWithCache<TEntity> where TEntity : class
     {
         /// <inheritdoc/>
         public PropertyBuilder Apply(EntityTypeBuilder<TEntity> builder)
         {
-            return builder.Property<DateTime>(IHasDeletionTime.Name).IsRequired();
+            return builder.Property<int>(IHasVersion.Name).IsRequired();
         }
 
-        private static DeletionTimePropertyBuilder<TEntity>? _instance;
+        private static VersionPropertyBuilder<TEntity>? _instance;
+
+        /// <inheritdoc/>
         public static IPropertyBuilder<TEntity> GetOrCreate(Type interfaceType)
         {
-            return _instance ??= new DeletionTimePropertyBuilder<TEntity>();
+            return _instance ??= new VersionPropertyBuilder<TEntity>();
         }
     }
 }
