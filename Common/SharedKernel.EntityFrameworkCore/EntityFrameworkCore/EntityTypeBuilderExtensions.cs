@@ -1,4 +1,4 @@
-﻿using Bamboo.Builders;
+﻿using Bamboo.EntityFrameworkCore.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel.Auditing;
 
@@ -12,9 +12,12 @@ namespace Microsoft.EntityFrameworkCore
         /// <summary>
         /// 内部缓存
         /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
         internal class InternalCache<TEntity> where TEntity : class
         {
-            internal static IPropertyBuilder<TEntity>[]? Builders { get; set; }
+            public static bool IsInitialized { get; internal set; } = false;
+
+            public static Action<EntityTypeBuilder<TEntity>>[] Builders { get; internal set; } = [];
         }
 
         /// <summary>
@@ -22,65 +25,79 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         public static void HasAuditingProperties<TEntity>(this EntityTypeBuilder<TEntity> builder) where TEntity : class
         {
-            foreach (var applier in GetOrCreateBuilders<TEntity>())
+            if (InternalCache<TEntity>.IsInitialized is false)
             {
-                applier.Apply(builder);
+                Initialize<TEntity>();
+            }
+
+            foreach (var action in InternalCache<TEntity>.Builders)
+            {
+                action(builder);
             }
         }
 
         /// <summary>
-        /// 获取缓存
+        /// 初始化
         /// </summary>
-        private static IPropertyBuilder<TEntity>[] GetOrCreateBuilders<TEntity>() where TEntity : class
+        private static void Initialize<TEntity>() where TEntity : class
         {
-            if (InternalCache<TEntity>.Builders == null)
+            InternalCache<TEntity>.IsInitialized = true;
+
+            var set = new HashSet<Type>();
+            var list = new List<Action<EntityTypeBuilder<TEntity>>>();
+
+            foreach (var (type, definition) in GetInterfacesRecursive(typeof(TEntity)))
             {
-                InternalCache<TEntity>.Builders = GetBuilders<TEntity>(typeof(TEntity)).ToArray();
-            }
-
-            return InternalCache<TEntity>.Builders;
-        }
-
-        /// <summary>
-        /// 获取 Builder
-        /// </summary>
-        private static IEnumerable<IPropertyBuilder<TEntity>> GetBuilders<TEntity>(Type entityType) where TEntity : class
-        {
-            HashSet<Type> exists = [];
-
-            foreach (var i in entityType.GetInterfaces())
-            {
-                // 获取定义
-                var definition = i.IsGenericType ? i.GetGenericTypeDefinition() : i;
-
-                if (exists.Contains(definition))
+                if (set.Contains(definition))
+                {
                     continue;
+                }
 
-                if (definition == typeof(IHasVersion))
-                    yield return VersionPropertyBuilder<TEntity>.GetOrCreate(i);
+                if (typeof(IHasCreationTime).Equals(definition))
+                    list.Add(EntityBuilderHelper<TEntity>.GenerateCreationTimeBuilder());
 
-                if (definition == typeof(IHasCreationTime))
-                    yield return CreationTimePropertyBuilder<TEntity>.GetOrCreate(i);
+                if (typeof(IHasModificationTime).Equals(definition))
+                    list.Add(EntityBuilderHelper<TEntity>.GenerateModificationTimeBuilder());
 
-                if (definition == typeof(IHasCreator<>))
-                    yield return CreatorPropertyBuilder<TEntity>.GetOrCreate(i);
+                if (typeof(IHasDeletionTime).Equals(definition))
+                    list.Add(EntityBuilderHelper<TEntity>.GenerateDeletionTimeBuilder());
 
-                if (definition == typeof(IHasModificationTime))
-                    yield return ModificationTimePropertyBuilder<TEntity>.GetOrCreate(i);
+                if (typeof(IHasDeleter<>).Equals(definition))
+                    list.Add(EntityBuilderHelper<TEntity>.GenerateDeleterBuilder(type));
 
-                if (definition == typeof(IHasModifier<>))
-                    yield return ModifierPropertyBuilder<TEntity>.GetOrCreate(i);
+                if (typeof(IHasModifier<>).Equals(definition))
+                    list.Add(EntityBuilderHelper<TEntity>.GenerateModifierBuilder(type));
 
-                if (definition == typeof(IHasDeletionTime))
-                    yield return DeletionTimePropertyBuilder<TEntity>.GetOrCreate(i);
+                if (typeof(IHasCreator<>).Equals(definition))
+                    list.Add(EntityBuilderHelper<TEntity>.GenerateCreatorBuilder(type));
 
-                if (definition == typeof(IHasDeleter<>))
-                    yield return DeleterPropertyBuilder<TEntity>.GetOrCreate(i);
+                if (typeof(IHasVersion).Equals(definition))
+                    list.Add(EntityBuilderHelper<TEntity>.GenerateVersionBuilder());
 
-                if (definition == typeof(IHasLogicalDeletion))
-                    yield return LogicalDeletionPropertyBuilder<TEntity>.GetOrCreate(i);
+                if (typeof(IHasLogicalDeletion).Equals(definition))
+                    list.Add(EntityBuilderHelper<TEntity>.GenerateLogicalDeletionBuilder());
 
-                exists.Add(definition);
+                set.Add(definition);
+            }
+
+            InternalCache<TEntity>.Builders = list.ToArray();
+        }
+
+        /// <summary>
+        /// 递归获取接口
+        /// </summary>
+        private static IEnumerable<(Type Type, Type Definition)> GetInterfacesRecursive(Type type)
+        {
+            foreach (var i in type.GetInterfaces())
+            {
+                yield return i.IsGenericType 
+                    ? (i, i.GetGenericTypeDefinition())
+                    : (i, i);
+
+                foreach (var subInterface in GetInterfacesRecursive(i))
+                {
+                    yield return subInterface;
+                }
             }
         }
     }
