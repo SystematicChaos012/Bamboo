@@ -13,7 +13,7 @@ namespace Bamboo.EntityFrameworkCore.Builders
         /// <inheritdoc/>
         public override Action<EntityTypeBuilder<TEntity>> Create()
         {
-            return (builder) => builder.Property<string>(IHasDeleter<TKey>.Name).IsRequired().HasValueGenerator<DeleterValueGenerator>();
+            return (builder) => builder.Property<TKey>(IHasDeleter<TKey>.Name).IsRequired().HasValueGenerator<DeleterValueGenerator>();
         }
 
         private class DeleterValueGenerator : ValueGenerator<TKey>
