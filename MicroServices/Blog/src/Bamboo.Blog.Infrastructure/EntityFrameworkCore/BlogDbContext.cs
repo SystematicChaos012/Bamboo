@@ -1,4 +1,5 @@
 ﻿using Bamboo.Posts;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bamboo.EntityFrameworkCore
@@ -6,8 +7,13 @@ namespace Bamboo.EntityFrameworkCore
     /// <summary>
     /// Post 数据上下文
     /// </summary>
-    public sealed class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(options)
+    public sealed class BlogDbContext(IMediator mediator, DbContextOptions<BlogDbContext> options) : DbContext(options)
     {
+        /// <summary>
+        /// 文章
+        /// </summary>
+        public DbSet<Post> Posts { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -29,6 +35,22 @@ namespace Bamboo.EntityFrameworkCore
 
                 p.HasAuditingProperties();
             });
+        }
+
+        /// <inheritdoc/>
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            AuditingHelper.UpdateAuditingProperties(this);
+
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        /// <inheritdoc/>
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            AuditingHelper.UpdateAuditingProperties(this);
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }
