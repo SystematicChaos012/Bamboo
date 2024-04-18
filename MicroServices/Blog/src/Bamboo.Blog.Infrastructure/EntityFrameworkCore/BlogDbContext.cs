@@ -32,24 +32,18 @@ namespace Bamboo.EntityFrameworkCore
                 p.Property(p => p.Content).IsRequired().HasMaxLength(-1);
                 p.Property(p => p.AuthorId).IsRequired();
                 p.Property(p => p.PublicationTime).IsRequired();
-
-                p.HasAuditingProperties();
             });
         }
 
         /// <inheritdoc/>
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            AuditingHelper.UpdateAuditingProperties(this);
-
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         /// <inheritdoc/>
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            AuditingHelper.UpdateAuditingProperties(this);
-
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
