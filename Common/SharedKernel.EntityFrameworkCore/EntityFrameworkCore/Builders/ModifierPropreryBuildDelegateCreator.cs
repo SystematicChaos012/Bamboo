@@ -13,7 +13,7 @@ namespace Bamboo.EntityFrameworkCore.Builders
         /// <inheritdoc/>
         public override Action<EntityTypeBuilder<TEntity>> Create()
         {
-            return (builder) => builder.Property<string>(IHasModifier<TKey>.Name).IsRequired().HasValueGenerator<ModifierValueGenerator>();
+            return (builder) => builder.Property<TKey>(IHasModifier<TKey>.Name).IsRequired().HasValueGenerator<ModifierValueGenerator>();
         }
 
         private class ModifierValueGenerator : ValueGenerator<TKey>

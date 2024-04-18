@@ -11,7 +11,7 @@ namespace Bamboo.EntityFrameworkCore.Builders
         /// <inheritdoc/>
         public override Action<EntityTypeBuilder<TEntity>> Create()
         {
-            return (builder) => builder.Property<DateTime?>(IHasDeletionTime.Name);
+            return (builder) => builder.Property<DateTime>(IHasDeletionTime.Name);
         }
     }
 }
