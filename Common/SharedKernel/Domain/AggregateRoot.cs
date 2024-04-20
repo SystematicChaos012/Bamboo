@@ -6,7 +6,11 @@
     /// <typeparam name="TKey">主键类型</typeparam>
     public class AggregateRoot<TKey> : IAggregateRoot
     {
+        private readonly int _version;
         private readonly List<DomainEvent> _events = [];
+
+        /// <inheritdoc/>
+        int IAggregateRoot.Version => _version;
 
         /// <inheritdoc/>
         IReadOnlyCollection<DomainEvent> IAggregateRoot.DomainEvents => _events.AsReadOnly();

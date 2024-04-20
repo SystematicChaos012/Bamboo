@@ -11,7 +11,9 @@
   </Folder>
   <Folder Name="/MicroServices/" />
   <Folder Name="/Common/">
-    <Project Path="Common\SharedKernel.EntityFrameworkCore\SharedKernel.EntityFrameworkCore.csproj" />
+    <Project Path="Common\SharedKernel\SharedKernel.csproj" />
+  </Folder>
+</Solution>ore.csproj" />
     <Project Path="Common\SharedKernel\SharedKernel.csproj" />
   </Folder>
 </Solution>

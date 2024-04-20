@@ -16,7 +16,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\Common\SharedKernel.EntityFrameworkCore\SharedKernel.EntityFrameworkCore.csproj" />
 	  <ProjectReference Include="..\..\..\..\Common\SharedKernel\SharedKernel.csproj" />
 	  <ProjectReference Include="..\Bamboo.Blog.Domain\Bamboo.Blog.Domain.csproj" />
 	</ItemGroup>

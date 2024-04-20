@@ -15,4 +15,8 @@
     <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Audit\" />
+  </ItemGroup>
+
 </Project>
