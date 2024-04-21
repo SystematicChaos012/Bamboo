@@ -10,9 +10,13 @@
   </Folder>
   <Folder Name="/MicroServices/Blog/" />
   <Folder Name="/MicroServices/" />
+  <Folder Name="/Components/Audit/src/">
+    <Project Path="Components\Audit\src\Audit.EntityFrameworkCore\Audit.EntityFrameworkCore.csproj" Type="Classic C#" />
+    <Project Path="Components\Audit\src\Audit\Audit.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Components/Audit/" />
+  <Folder Name="/Components/" />
   <Folder Name="/Common/">
     <Project Path="Common\SharedKernel\SharedKernel.csproj" />
-  </Folder>
-</Solution>    <Project Path="Common\SharedKernel\SharedKernel.csproj" />
   </Folder>
 </Solution>
