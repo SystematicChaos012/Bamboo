@@ -17,6 +17,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\..\Common\SharedKernel\SharedKernel.csproj" />
+	  <ProjectReference Include="..\..\..\..\Components\Audit\src\Audit.EntityFrameworkCore\Audit.EntityFrameworkCore.csproj" />
 	  <ProjectReference Include="..\Bamboo.Blog.Domain\Bamboo.Blog.Domain.csproj" />
 	</ItemGroup>
 

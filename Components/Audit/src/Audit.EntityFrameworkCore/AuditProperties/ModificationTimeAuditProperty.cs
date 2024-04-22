@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Audit.AuditProperties
 {
@@ -14,9 +13,9 @@ namespace Audit.AuditProperties
         public static bool EnableLocalTime { get; set; } = false;
 
         /// <inheritdoc/>
-        public override (Action<EntityTypeBuilder> Builder, Action<AuditContext> Writer) Create(Type entityType)
+        public override Property Create(Type entityType)
         {
-            return (
+            return new (
                 builder =>
                 {
                     builder.Property<DateTime?>("ModificationTime");

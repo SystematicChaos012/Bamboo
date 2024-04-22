@@ -3,7 +3,6 @@ using Bamboo.Posts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedKernel.UnitOfWork;
 
 namespace Bamboo
 {
@@ -31,7 +30,7 @@ namespace Bamboo
                 options.UseSqlServer(configuration.GetConnectionString("Blog")), ServiceLifetime.Scoped);
 
             // 添加 UnitOfWork
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            // services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

@@ -1,13 +1,16 @@
-﻿using Bamboo.Posts;
+﻿using Audit;
+using Audit.AuditProperties;
+using Bamboo.Posts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Domain;
 
 namespace Bamboo.EntityFrameworkCore
 {
     /// <summary>
     /// Post 数据上下文
     /// </summary>
-    public sealed class BlogDbContext(IMediator mediator, DbContextOptions<BlogDbContext> options) : DbContext(options)
+    public sealed class BlogDbContext(IServiceProvider serviceProvider, DbContextOptions<BlogDbContext> options) : DbContext(options)
     {
         /// <summary>
         /// 文章
@@ -32,19 +35,49 @@ namespace Bamboo.EntityFrameworkCore
                 p.Property(p => p.Content).IsRequired().HasMaxLength(-1);
                 p.Property(p => p.AuthorId).IsRequired();
                 p.Property(p => p.PublicationTime).IsRequired();
+
+                foreach (var property in AuditPropertiesManager.GetAuditProperties(typeof(Post)))
+                {
+                    property.Build(p);
+                }
             });
         }
 
         /// <inheritdoc/>
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
+            AuditHandleBeforeSaveChanges();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         /// <inheritdoc/>
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
+            AuditHandleBeforeSaveChanges();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        /// <summary>
+        /// 保存之前审计处理
+        /// </summary>
+        private void AuditHandleBeforeSaveChanges()
+        {
+            var entries = ChangeTracker.Entries();
+
+            foreach (var entry in entries)
+            {
+                var properties = AuditPropertiesManager.GetAuditProperties(entry.Metadata.ClrType);
+                if (properties.Length == 0)
+                {
+                    continue;
+                }
+
+                var context = new AuditContext(serviceProvider, entry.State, entry);
+                foreach (var property in properties)
+                {
+                    property.Write(context);
+                }
+            }
         }
     }
 }

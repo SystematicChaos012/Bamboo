@@ -12,10 +12,10 @@ namespace Audit.AuditProperties
     internal sealed class ModifierAuditProperty : AuditProperty
     {
         /// <inheritdoc/>
-        public override (Action<EntityTypeBuilder> Builder, Action<AuditContext> Writer) Create(Type entityType)
+        public override Property Create(Type entityType)
         {
             var type = AuditHelper.GetNullableTypeOfGenericArgument(entityType, typeof(IModifier<>), 0);
-            return (
+            return new (
                 builder =>
                 {
                     builder.Property(type, "Modifier");

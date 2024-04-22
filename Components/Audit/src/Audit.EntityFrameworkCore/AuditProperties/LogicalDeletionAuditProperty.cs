@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Audit.AuditProperties
 {
@@ -8,9 +7,9 @@ namespace Audit.AuditProperties
     /// </summary>
     internal sealed class LogicalDeletionAuditProperty : AuditProperty
     {
-        public override (Action<EntityTypeBuilder> Builder, Action<AuditContext> Writer) Create(Type entityType)
+        public override Property Create(Type entityType)
         {
-            return (
+            return new (
                 builder =>
                 {
                     builder.Property<bool>("IsDeleted").IsRequired();

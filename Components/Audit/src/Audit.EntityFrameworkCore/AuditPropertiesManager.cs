@@ -1,5 +1,4 @@
 ﻿using Audit.AuditProperties;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Collections.Frozen;
 
 namespace Audit
@@ -7,6 +6,7 @@ namespace Audit
     public static class AuditPropertiesManager
     {
         private readonly static FrozenDictionary<Type, AuditProperty> _definitionMap;
+        private static FrozenDictionary<Type, Property[]> _cache;
 
         static AuditPropertiesManager()
         {
@@ -21,10 +21,19 @@ namespace Audit
                 { typeof(ILogicalDeletion), new LogicalDeletionAuditProperty() },
                 { typeof(IConcurrencyStamp), new ConcurrencyStampAuditProperty() }
             }.ToFrozenDictionary();
+
+            _cache = new Dictionary<Type, Property[]>().ToFrozenDictionary();
         }
 
-        public static IEnumerable<(Action<EntityTypeBuilder> Builder, Action<AuditContext> Writer)> GetAuditProperties(Type entityType)
+        public static Property[] GetAuditProperties(Type entityType)
         {
+            if (_cache.TryGetValue(entityType, out var cacheItem))
+            {
+                return cacheItem;
+            }
+
+            var properties = new List<Property>();
+
             foreach (var interfaceType in entityType.GetInterfaces())
             {
                 var definition = interfaceType.IsGenericType ? interfaceType.GetGenericTypeDefinition() : interfaceType;
@@ -33,8 +42,16 @@ namespace Audit
                     continue;
                 }
 
-                yield return auditProperty.Create(entityType);
+                properties.Add(auditProperty.Create(entityType));
             }
+
+            Property[] arrayProperties = [.. properties];
+            _cache = new Dictionary<Type, Property[]>(_cache)
+            {
+                [entityType] = arrayProperties
+            }.ToFrozenDictionary();
+
+            return arrayProperties;
         }
     }
 }

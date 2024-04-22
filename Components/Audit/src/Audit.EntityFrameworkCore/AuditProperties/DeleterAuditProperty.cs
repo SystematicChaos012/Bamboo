@@ -1,6 +1,5 @@
 ﻿using Audit.Common;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Profiles;
 
@@ -12,10 +11,10 @@ namespace Audit.AuditProperties
     internal sealed class DeleterAuditProperty : AuditProperty
     {
         /// <inheritdoc/>
-        public override (Action<EntityTypeBuilder> Builder, Action<AuditContext> Writer) Create(Type entityType)
+        public override Property Create(Type entityType)
         {
             var type = AuditHelper.GetNullableTypeOfGenericArgument(entityType, typeof(IDeleter<>), 0);
-            return (
+            return new (
                 builder =>
                 {
                     builder.Property(type, "Deleter");
