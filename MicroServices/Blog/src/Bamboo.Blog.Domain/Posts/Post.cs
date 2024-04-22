@@ -8,7 +8,9 @@ namespace Bamboo.Posts
     /// <summary>
     /// 文章
     /// </summary>
-    public sealed partial class Post : AggregateRoot<PostId>, ICreationTime, ICreator<Guid>
+    public sealed partial class Post 
+        : AggregateRoot<PostId>
+        , IConcurrencyStamp, ICreationTime, ICreator<Guid>, IModificationTime, IModifier<Guid>, IDeletionTime, IDeleter<Guid>, ILogicalDeletion
     {
         /// <summary>
         /// 标题
