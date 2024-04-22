@@ -45,4 +45,22 @@
             return hash.ToHashCode();
         }
     }
+
+    /// <summary>
+    /// 值对象
+    /// </summary>
+    /// <typeparam name="T">值类型</typeparam>
+    public class ValueObject<T>(T value) : ValueObject
+    {
+        /// <summary>
+        /// 值
+        /// </summary>
+        public T Value { get; } = value;
+
+        /// <inheritdoc/>
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value!;
+        }
+    }
 }

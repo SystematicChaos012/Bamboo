@@ -6,13 +6,8 @@ namespace Bamboo.Posts.ValueObjects
     /// <summary>
     /// Post Id
     /// </summary>
-    public class PostId(Guid value) : ValueObject, IParsable<PostId>
+    public sealed class PostId(Guid value) : ValueObject<Guid>(value), IParsable<PostId>
     {
-        /// <summary>
-        /// 值
-        /// </summary>
-        public Guid Value { get; } = value;
-
         /// <inheritdoc/>
         public static PostId Parse(string s, IFormatProvider? provider)
         {
@@ -30,12 +25,6 @@ namespace Bamboo.Posts.ValueObjects
 
             result = null;
             return false;
-        }
-
-        /// <inheritdoc/>
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
         }
     }
 }

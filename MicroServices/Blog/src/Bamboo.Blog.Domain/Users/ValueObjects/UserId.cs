@@ -6,13 +6,8 @@ namespace Bamboo.Users.ValueObjects
     /// <summary>
     /// User Id
     /// </summary>
-    public class UserId(Guid value) : ValueObject, IParsable<UserId>
+    public sealed class UserId(Guid value) : ValueObject<Guid>(value), IParsable<UserId>
     {
-        /// <summary>
-        /// 值
-        /// </summary>
-        public Guid Value { get; } = value;
-
         /// <inheritdoc/>
         public static UserId Parse(string s, IFormatProvider? provider)
         {
@@ -30,12 +25,6 @@ namespace Bamboo.Users.ValueObjects
 
             result = null;
             return false;
-        }
-
-        /// <inheritdoc/>
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
         }
     }
 }
