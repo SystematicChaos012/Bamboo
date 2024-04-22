@@ -1,4 +1,6 @@
-﻿using Bamboo.Posts.DomainEvents;
+﻿using Audit;
+using Bamboo.Posts.DomainEvents;
+using Bamboo.Posts.ValueObjects;
 using SharedKernel.Domain;
 
 namespace Bamboo.Posts
@@ -6,7 +8,7 @@ namespace Bamboo.Posts
     /// <summary>
     /// 文章
     /// </summary>
-    public sealed partial class Post : AggregateRoot<Guid>
+    public sealed partial class Post : AggregateRoot<PostId>, ICreationTime, ICreator<Guid>
     {
         /// <summary>
         /// 标题
@@ -36,7 +38,7 @@ namespace Bamboo.Posts
         /// <summary>
         /// 创建 Post
         /// </summary>
-        public Post(Guid id, string title, string content, Guid authorId, DateTime publicationTime) => 
+        public Post(PostId id, string title, string content, Guid authorId, DateTime publicationTime) => 
             RaiseEvent(new PostCreatedDomainEvent(id, title, content, authorId, publicationTime));
 
         /// <summary>
@@ -45,9 +47,11 @@ namespace Bamboo.Posts
         public void Remove() => RaiseEvent(new PostDeletedDomainEvent(Id));
     }
 
-    partial class Post : IDomainEventApplier<PostCreatedDomainEvent>
+    partial class Post : IDomainEventApplier<PostCreatedDomainEvent>, IDomainEventApplier<PostDeletedDomainEvent>
     {
         void IDomainEventApplier<PostCreatedDomainEvent>.Apply(PostCreatedDomainEvent domainEvent) =>
             (Id, Title, Content, AuthorId, PublicationTime) = domainEvent;
+
+        void IDomainEventApplier<PostDeletedDomainEvent>.Apply(PostDeletedDomainEvent domainEvent) { }
     }
 }

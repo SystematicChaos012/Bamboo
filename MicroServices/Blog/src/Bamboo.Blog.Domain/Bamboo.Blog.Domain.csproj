@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Common\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\..\Components\Audit\src\Audit\Audit.csproj" />
   </ItemGroup>
 
 </Project>
