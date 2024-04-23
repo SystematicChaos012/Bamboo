@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Audit.AuditProperties
+﻿namespace Audit.AuditProperties
 {
     /// <summary>
     /// ConcurrencyStamp 审计属性
@@ -9,17 +7,14 @@ namespace Audit.AuditProperties
     {
         public override AuditProperty Create(Type entityType)
         {
-            return new (
+            return new(
                 builder =>
                 {
                     builder.Property<Guid>("ConcurrencyStamp").IsConcurrencyToken();
-                }, 
-                context => 
+                },
+                context =>
                 {
-                    if (context.EntityState is EntityState.Added or EntityState.Modified)
-                    {
-                        context.EntityEntry.Property("ConcurrencyStamp").CurrentValue = Guid.NewGuid();
-                    }
+                    context.EntityEntry.Property("ConcurrencyStamp").CurrentValue = Guid.NewGuid();
                 });
         }
     }
