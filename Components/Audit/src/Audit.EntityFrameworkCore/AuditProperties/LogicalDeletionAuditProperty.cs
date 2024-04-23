@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Audit.AuditProperties
 {
@@ -13,6 +14,11 @@ namespace Audit.AuditProperties
                 builder =>
                 {
                     builder.Property<bool>("IsDeleted").IsRequired();
+
+                    var parameter = Expression.Parameter(entityType, "b");
+                    var property = Expression.Call(typeof(EF), nameof(EF.Property), [typeof(bool)], parameter, Expression.Constant("IsDeleted"));
+                    var condition = Expression.Equal(property, Expression.Constant(false));
+                    builder.HasQueryFilter(Expression.Lambda(condition, parameter));
                 },
                 context =>
                 {
