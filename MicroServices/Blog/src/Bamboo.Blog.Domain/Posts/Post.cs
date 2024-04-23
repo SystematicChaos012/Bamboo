@@ -55,8 +55,16 @@ namespace Bamboo.Posts
         /// </summary>
         /// <param name="authorId">作者 Id</param>
         /// <param name="name">作者名称</param>
-        public void AddAuthor(PostAuthorId authorId, string name) =>
+        public void AddAuthor(PostAuthorId authorId, string name)
+        {
+            var author = _authors.Find(x => x.Id == authorId);
+            if (author is not null)
+            {
+                throw new PostAuthorAlreadyExistsException();
+            }
+
             RaiseEvent(new PostAuthorAddedDomainEvent(authorId, Id, name));
+        }
     }
 
     partial class Post : IDomainEventApplier<PostCreatedDomainEvent>, IDomainEventApplier<PostAuthorAddedDomainEvent>
@@ -68,12 +76,6 @@ namespace Bamboo.Posts
 
         void IDomainEventApplier<PostAuthorAddedDomainEvent>.Apply(PostAuthorAddedDomainEvent domainEvent)
         {
-            var author = _authors.Find(x => x.Id == domainEvent.Id);
-            if (author is not null)
-            {
-                throw new PostAuthorAlreadyExistsException();
-            }
-
             _authors.Add(new PostAuthor(domainEvent.Id, domainEvent.PostId, domainEvent.Name));
         }
     }
