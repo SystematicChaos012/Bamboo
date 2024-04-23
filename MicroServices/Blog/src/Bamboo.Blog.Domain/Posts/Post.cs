@@ -1,5 +1,7 @@
 ﻿using Audit;
 using Bamboo.Posts.DomainEvents;
+using Bamboo.Posts.Entities;
+using Bamboo.Posts.Exceptions;
 using Bamboo.Posts.ValueObjects;
 using SharedKernel.Domain;
 
@@ -23,14 +25,15 @@ namespace Bamboo.Posts
         public string Content { get; private set; } = null!;
 
         /// <summary>
-        /// 作者
-        /// </summary>
-        public Guid AuthorId { get; private set; }
-
-        /// <summary>
         /// 发布时间
         /// </summary>
         public DateTime PostedTime { get; private set; }
+
+        /// <summary>
+        /// 作者
+        /// </summary>
+        public ICollection<PostAuthor> Authors => _authors.AsReadOnly();
+        private readonly List<PostAuthor> _authors = [];
 
         /// <summary>
         /// Used by EF Core
@@ -38,33 +41,40 @@ namespace Bamboo.Posts
         private Post() { }
 
         /// <summary>
-        /// 创建 Post
+        /// 创建文章
         /// </summary>
-        public Post(PostId id, string title, string content, Guid authorId, DateTime postedTime) =>
-            RaiseEvent(new PostCreatedDomainEvent(id, title, content, authorId, postedTime));
+        /// <param name="id">文章 Id</param>
+        /// <param name="title">标题</param>
+        /// <param name="content">内容</param>
+        /// <param name="postedTime">发布时间</param>
+        public Post(PostId id, string title, string content, DateTime postedTime) => 
+            RaiseEvent(new PostCreatedDomainEvent(id, title, content, postedTime));
 
         /// <summary>
-        /// 更新标题
+        /// 添加作者
         /// </summary>
-        public void UpdateTitle(string title) => RaiseEvent(new PostTitleChangedDomainEvent(Id, title));
-
-        /// <summary>
-        /// 删除文章
-        /// </summary>
-        public void Remove() => RaiseEvent(new PostDeletedDomainEvent(Id));
+        /// <param name="authorId">作者 Id</param>
+        /// <param name="name">作者名称</param>
+        public void AddAuthor(PostAuthorId authorId, string name) =>
+            RaiseEvent(new PostAuthorAddedDomainEvent(authorId, Id, name));
     }
 
-    partial class Post 
-        : IDomainEventApplier<PostCreatedDomainEvent>
-        , IDomainEventApplier<PostDeletedDomainEvent>
-        , IDomainEventApplier<PostTitleChangedDomainEvent>
+    partial class Post : IDomainEventApplier<PostCreatedDomainEvent>, IDomainEventApplier<PostAuthorAddedDomainEvent>
     {
-        void IDomainEventApplier<PostCreatedDomainEvent>.Apply(PostCreatedDomainEvent domainEvent) =>
-            (Id, Title, Content, AuthorId, PostedTime) = domainEvent;
+        void IDomainEventApplier<PostCreatedDomainEvent>.Apply(PostCreatedDomainEvent domainEvent)
+        {
+            (Id, Title, Content, PostedTime) = domainEvent;
+        }
 
-        void IDomainEventApplier<PostTitleChangedDomainEvent>.Apply(PostTitleChangedDomainEvent domainEvent) =>
-            (_, Title) = domainEvent;
+        void IDomainEventApplier<PostAuthorAddedDomainEvent>.Apply(PostAuthorAddedDomainEvent domainEvent)
+        {
+            var author = _authors.Find(x => x.Id == domainEvent.Id);
+            if (author != null)
+            {
+                throw new PostAuthorAlreadyExistsException();
+            }
 
-        void IDomainEventApplier<PostDeletedDomainEvent>.Apply(PostDeletedDomainEvent domainEvent) { }
+            _authors.Add(new PostAuthor(domainEvent.Id, domainEvent.PostId, domainEvent.Name));
+        }
     }
 }

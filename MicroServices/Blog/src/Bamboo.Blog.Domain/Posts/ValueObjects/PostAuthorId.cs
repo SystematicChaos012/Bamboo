@@ -1,7 +1,7 @@
 ﻿namespace Bamboo.Posts.ValueObjects
 {
     /// <summary>
-    /// Post Id
+    /// Post Author Id
     /// </summary>
-    public readonly record struct PostId(Guid Value);
+    public readonly record struct PostAuthorId(Guid Id);
 }

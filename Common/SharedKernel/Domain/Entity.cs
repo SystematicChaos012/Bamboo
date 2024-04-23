@@ -12,6 +12,15 @@
     /// </summary>
     public abstract class Entity<TKey>
     {
+        protected Entity()
+        {
+        }
+
+        protected Entity(TKey id)
+        {
+            Id = id;
+        }
+
         /// <inheritdoc/>
         public virtual TKey Id { get; protected set; } = default!;
     }

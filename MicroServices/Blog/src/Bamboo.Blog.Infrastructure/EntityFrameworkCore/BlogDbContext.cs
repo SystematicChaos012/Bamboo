@@ -34,8 +34,18 @@ namespace Bamboo.EntityFrameworkCore
                 p.Property(p => p.Id).IsRequired().HasConversion(x => x.Value, x => new PostId(x));
                 p.Property(p => p.Title).IsRequired().HasMaxLength(50);
                 p.Property(p => p.Content).IsRequired().HasMaxLength(-1);
-                p.Property(p => p.AuthorId).IsRequired();
                 p.Property(p => p.PostedTime).IsRequired();
+                p.OwnsMany(p => p.Authors, a => 
+                {
+                    a.ToTable("PostAuthors", "Blog");
+                    
+                    a.HasKey(a => a.Id).IsClustered(true);
+
+                    a.Property(a => a.Id).IsRequired().HasConversion(x => x.Id, x => new PostAuthorId(x));
+                    a.Property(a => a.Name).IsRequired().HasMaxLength(20);
+
+                    a.WithOwner().HasForeignKey(a => a.PostId);
+                });
 
                 foreach (var property in AuditPropertiesManager.GetAuditProperties(typeof(Post)))
                 {
