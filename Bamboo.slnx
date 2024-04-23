@@ -5,6 +5,7 @@
   </Folder>
   <Folder Name="/MicroServices/Identity/" />
   <Folder Name="/MicroServices/Blog/tests/">
+    <Project Path="MicroServices\Blog\tests\Bamboo.Blog.Domain.Tests\Bamboo.Blog.Domain.Tests.csproj" Type="Classic C#" />
     <Project Path="MicroServices\Blog\tests\Bamboo.Blog.Infrastructure.Tests\Bamboo.Blog.Infrastructure.Tests.csproj" />
   </Folder>
   <Folder Name="/MicroServices/Blog/src/">
@@ -14,7 +15,7 @@
   <Folder Name="/MicroServices/Blog/" />
   <Folder Name="/MicroServices/" />
   <Folder Name="/Components/Audit/tests/">
-    <Project Path="Components\Audit\tests\Audit.EntityFrameworkCore.Tests\Audit.EntityFrameworkCore.Tests.csproj" Type="Classic C#" />
+    <Project Path="Components\Audit\tests\Audit.EntityFrameworkCore.Tests\Audit.EntityFrameworkCore.Tests.csproj" />
   </Folder>
   <Folder Name="/Components/Audit/src/">
     <Project Path="Components\Audit\src\Audit.EntityFrameworkCore\Audit.EntityFrameworkCore.csproj" />
