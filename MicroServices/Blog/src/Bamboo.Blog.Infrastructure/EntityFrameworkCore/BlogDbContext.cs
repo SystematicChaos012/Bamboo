@@ -34,7 +34,7 @@ namespace Bamboo.EntityFrameworkCore
                 p.Property(p => p.Id).IsRequired().HasConversion(x => x.Value, x => new PostId(x));
                 p.Property(p => p.Title).IsRequired().HasMaxLength(50);
                 p.Property(p => p.Content).IsRequired().HasMaxLength(-1);
-                p.Property(p => p.PostedTime).IsRequired();
+                p.Property(p => p.PostedTime);
                 p.OwnsMany(p => p.Authors, a => 
                 {
                     a.ToTable("PostAuthors", "Blog");

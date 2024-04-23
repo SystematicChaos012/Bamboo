@@ -1,4 +1,6 @@
-﻿using Bamboo.Posts.Exceptions;
+﻿using Bamboo.Posts.Entities;
+using Bamboo.Posts.Enums;
+using Bamboo.Posts.Exceptions;
 using Bamboo.Posts.ValueObjects;
 
 namespace Bamboo.Posts
@@ -11,20 +13,20 @@ namespace Bamboo.Posts
             var postId = new PostId(Guid.NewGuid());
             var title = "Title";
             var content = "Content";
-            var postedTime = DateTime.UtcNow;
 
-            var post = new Post(postId, title, content, postedTime);
+            var post = new Post(postId, title, content);
 
             Assert.Equal(post.Id, postId);
             Assert.Equal(post.Title, title);
             Assert.Equal(post.Content, content);
-            Assert.Equal(post.PostedTime, postedTime);
+            Assert.Equal(post.Status, PostStatus.Draft);
+            Assert.Null(post.PostedTime);
         }
 
         [Fact]
         public void Post_Add_Author()
         {
-            var post = new Post(new PostId(Guid.NewGuid()), "Title", "Content", DateTime.UtcNow);
+            var post = CreatePost();
             var authorId = new PostAuthorId(Guid.NewGuid());
             var authorName = "Author";
 
@@ -39,13 +41,65 @@ namespace Bamboo.Posts
         [Fact]
         public void Post_Add_Repeat_Author()
         {
-            var post = new Post(new PostId(Guid.NewGuid()), "Title", "Content", DateTime.UtcNow);
+            var post = CreatePostWithOneAuthor(out var author);
+
+            Assert.Throws<PostAuthorAlreadyExistsException>(() => post.AddAuthor(author.Id, author.Name));
+        }
+
+        [Fact]
+        public void Post_To_Publish_Without_Author()
+        {
+            var post = CreatePost();
+
+            Assert.Throws<PostAuthorNotFoundException>(post.ToPublish);
+        }
+
+        [Fact]
+        public void Post_To_Publish_With_Author()
+        {
+            var post = CreatePostWithOneAuthor(out _);
+
+            post.ToPublish();
+
+            Assert.Equal(PostStatus.Published, post.Status);
+            Assert.NotNull(post.PostedTime);
+        }
+
+        [Fact]
+        public void Post_To_Publish_When_Published()
+        {
+            var post = CreatePostWithOneAuthor(out _);
+
+            post.ToPublish();
+
+            Assert.Throws<PostAlreadyPublishedException>(post.ToPublish);
+        }
+
+        private static Post CreatePost()
+        {
+            var postId = new PostId(Guid.NewGuid());
+            var title = "Title";
+            var content = "Content";
+
+            return new Post(postId, title, content);
+        }
+
+        private static Post CreatePostWithOneAuthor(out PostAuthor author)
+        {
+            var postId = new PostId(Guid.NewGuid());
+            var title = "Title";
+            var content = "Content";
+
+            var post = new Post(postId, title, content);
+
             var authorId = new PostAuthorId(Guid.NewGuid());
             var authorName = "Author";
 
             post.AddAuthor(authorId, authorName);
 
-            Assert.Throws<PostAuthorAlreadyExistsException>(() => post.AddAuthor(authorId, authorName));
+            author = post.Authors.Single();
+
+            return post;
         }
     }
 }
