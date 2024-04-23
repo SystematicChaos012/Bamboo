@@ -69,7 +69,7 @@ namespace Bamboo.Posts
         void IDomainEventApplier<PostAuthorAddedDomainEvent>.Apply(PostAuthorAddedDomainEvent domainEvent)
         {
             var author = _authors.Find(x => x.Id == domainEvent.Id);
-            if (author != null)
+            if (author is not null)
             {
                 throw new PostAuthorAlreadyExistsException();
             }
