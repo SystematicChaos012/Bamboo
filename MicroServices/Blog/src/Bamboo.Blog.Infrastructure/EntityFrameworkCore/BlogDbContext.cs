@@ -35,7 +35,7 @@ namespace Bamboo.EntityFrameworkCore
                 p.Property(p => p.Title).IsRequired().HasMaxLength(50);
                 p.Property(p => p.Content).IsRequired().HasMaxLength(-1);
                 p.Property(p => p.AuthorId).IsRequired();
-                p.Property(p => p.PublicationTime).IsRequired();
+                p.Property(p => p.PostedTime).IsRequired();
 
                 foreach (var property in AuditPropertiesManager.GetAuditProperties(typeof(Post)))
                 {

@@ -6,5 +6,5 @@ namespace Bamboo.Posts.DomainEvents
     /// <summary>
     /// Post 创建领域事件
     /// </summary>
-    public sealed record PostCreatedDomainEvent(PostId Id, string Title, string Content, Guid AuthorId, DateTime PublicationTime) : DomainEvent;
+    public sealed record PostCreatedDomainEvent(PostId Id, string Title, string Content, Guid AuthorId, DateTime PostedTime) : DomainEvent;
 }

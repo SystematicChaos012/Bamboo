@@ -30,7 +30,7 @@ namespace Bamboo.Posts
         /// <summary>
         /// 发布时间
         /// </summary>
-        public DateTime PublicationTime { get; private set; }
+        public DateTime PostedTime { get; private set; }
 
         /// <summary>
         /// Used by EF Core
@@ -40,8 +40,8 @@ namespace Bamboo.Posts
         /// <summary>
         /// 创建 Post
         /// </summary>
-        public Post(PostId id, string title, string content, Guid authorId, DateTime publicationTime) =>
-            RaiseEvent(new PostCreatedDomainEvent(id, title, content, authorId, publicationTime));
+        public Post(PostId id, string title, string content, Guid authorId, DateTime postedTime) =>
+            RaiseEvent(new PostCreatedDomainEvent(id, title, content, authorId, postedTime));
 
         /// <summary>
         /// 更新标题
@@ -60,7 +60,7 @@ namespace Bamboo.Posts
         , IDomainEventApplier<PostTitleChangedDomainEvent>
     {
         void IDomainEventApplier<PostCreatedDomainEvent>.Apply(PostCreatedDomainEvent domainEvent) =>
-            (Id, Title, Content, AuthorId, PublicationTime) = domainEvent;
+            (Id, Title, Content, AuthorId, PostedTime) = domainEvent;
 
         void IDomainEventApplier<PostTitleChangedDomainEvent>.Apply(PostTitleChangedDomainEvent domainEvent) =>
             (_, Title) = domainEvent;
