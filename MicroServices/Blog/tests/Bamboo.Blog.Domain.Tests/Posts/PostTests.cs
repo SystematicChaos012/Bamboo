@@ -1,4 +1,5 @@
-﻿using Bamboo.Posts.ValueObjects;
+﻿using Bamboo.Posts.Exceptions;
+using Bamboo.Posts.ValueObjects;
 
 namespace Bamboo.Posts
 {
@@ -29,10 +30,22 @@ namespace Bamboo.Posts
 
             post.AddAuthor(authorId, authorName);
 
-            Assert.Single(post.Authors);
-            Assert.Equal(post.Authors.Single().Id, authorId);
-            Assert.Equal(post.Authors.Single().Name, authorName);
-            Assert.Equal(post.Authors.Single().PostId, post.Id);
+            var author = Assert.Single(post.Authors);
+            Assert.Equal(author.Id, authorId);
+            Assert.Equal(author.Name, authorName);
+            Assert.Equal(author.PostId, post.Id);
+        }
+
+        [Fact]
+        public void Post_Add_Repeat_Author()
+        {
+            var post = new Post(new PostId(Guid.NewGuid()), "Title", "Content", DateTime.UtcNow);
+            var authorId = new PostAuthorId(Guid.NewGuid());
+            var authorName = "Author";
+
+            post.AddAuthor(authorId, authorName);
+
+            Assert.Throws<PostAuthorAlreadyExistsException>(() => post.AddAuthor(authorId, authorName));
         }
     }
 }
