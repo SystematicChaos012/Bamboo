@@ -1,6 +1,5 @@
 ﻿using Audit.Common;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using SharedKernel.Profiles;
 
@@ -9,10 +8,10 @@ namespace Audit.AuditProperties
     /// <summary>
     /// 修改人审计属性
     /// </summary>
-    internal sealed class ModifierAuditProperty : AuditProperty
+    internal sealed class ModifierAuditPropertyCreator : AuditPropertyCreator
     {
         /// <inheritdoc/>
-        public override Property Create(Type entityType)
+        public override AuditProperty Create(Type entityType)
         {
             var type = AuditHelper.GetNullableTypeOfGenericArgument(entityType, typeof(IModifier<>), 0);
             var orignalType = type.GetGenericArguments()[0];

@@ -6,27 +6,27 @@ using SharedKernel.Profiles;
 namespace Audit.AuditProperties
 {
     /// <summary>
-    /// 删除人审计属性
+    /// 创建人审计属性
     /// </summary>
-    internal sealed class DeleterAuditProperty : AuditProperty
+    internal sealed class CreatorAuditPropertyCreator : AuditPropertyCreator
     {
         /// <inheritdoc/>
-        public override Property Create(Type entityType)
+        public override AuditProperty Create(Type entityType)
         {
-            var type = AuditHelper.GetNullableTypeOfGenericArgument(entityType, typeof(IDeleter<>), 0);
+            var type = AuditHelper.GetNullableTypeOfGenericArgument(entityType, typeof(ICreator<>), 0);
             var orignalType = type.GetGenericArguments()[0];
 
             return new (
                 builder =>
                 {
-                    builder.Property(type, "Deleter");
+                    builder.Property(type, "Creator");
                 },
                 context =>
                 {
-                    if (context.EntityState == EntityState.Deleted)
+                    if (context.EntityState == EntityState.Added)
                     {
                         var currentUser = context.ServiceProvider.GetRequiredService<ICurrentUser>();
-                        context.EntityEntry.Property("Deleter").CurrentValue = AuditHelper.Parse(orignalType, currentUser.Id);
+                        context.EntityEntry.Property("Creator").CurrentValue = AuditHelper.Parse(orignalType, currentUser.Id);
                     }
                 }
             );

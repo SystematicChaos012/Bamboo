@@ -5,7 +5,7 @@ namespace Audit.AuditProperties
     /// <summary>
     /// 删除时间审计属性
     /// </summary>
-    internal sealed class DeletionTimeAuditProperty : AuditProperty
+    internal sealed class DeletionTimeAuditPropertyCreator : AuditPropertyCreator
     {
         /// <summary>
         /// 启用本地时间
@@ -13,7 +13,7 @@ namespace Audit.AuditProperties
         public static bool EnableLocalTime { get; set; } = false;
 
         /// <inheritdoc/>
-        public override Property Create(Type entityType)
+        public override AuditProperty Create(Type entityType)
         {
             return new (
                 builder =>

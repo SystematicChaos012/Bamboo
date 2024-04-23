@@ -5,9 +5,9 @@ namespace Audit.AuditProperties
     /// <summary>
     /// ConcurrencyStamp 审计属性
     /// </summary>
-    internal sealed class ConcurrencyStampAuditProperty : AuditProperty
+    internal sealed class ConcurrencyStampAuditPropertyCreator : AuditPropertyCreator
     {
-        public override Property Create(Type entityType)
+        public override AuditProperty Create(Type entityType)
         {
             return new (
                 builder =>

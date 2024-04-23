@@ -73,7 +73,7 @@ namespace Bamboo.EntityFrameworkCore
                     continue;
                 }
 
-                var context = new AuditContext(serviceProvider, entry.State, entry);
+                var context = new AuditPropertyContext(serviceProvider, entry.State, entry);
                 foreach (var property in properties)
                 {
                     property.Write(context);

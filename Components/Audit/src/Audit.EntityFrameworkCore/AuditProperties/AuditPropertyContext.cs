@@ -6,5 +6,5 @@ namespace Audit.AuditProperties
     /// <summary>
     /// 审计上下文
     /// </summary>
-    public record class AuditContext(IServiceProvider ServiceProvider, EntityState EntityState, EntityEntry EntityEntry);
+    public record class AuditPropertyContext(IServiceProvider ServiceProvider, EntityState EntityState, EntityEntry EntityEntry);
 }

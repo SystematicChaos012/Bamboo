@@ -3,9 +3,9 @@
 namespace Audit.AuditProperties
 {
     /// <summary>
-    /// 修改时间审计属性
+    /// 创建时间审计属性
     /// </summary>
-    internal sealed class ModificationTimeAuditProperty : AuditProperty
+    internal sealed class CreationTimeAuditPropertyCreator : AuditPropertyCreator
     {
         /// <summary>
         /// 启用本地时间
@@ -13,18 +13,18 @@ namespace Audit.AuditProperties
         public static bool EnableLocalTime { get; set; } = false;
 
         /// <inheritdoc/>
-        public override Property Create(Type entityType)
+        public override AuditProperty Create(Type entityType)
         {
             return new (
                 builder =>
                 {
-                    builder.Property<DateTime?>("ModificationTime");
+                    builder.Property<DateTime>("CreationTime").IsRequired();
                 },
                 context =>
                 {
-                    if (context.EntityState == EntityState.Modified)
+                    if (context.EntityState == EntityState.Added)
                     {
-                        context.EntityEntry.Property("ModificationTime").CurrentValue = EnableLocalTime ? DateTime.Now : DateTime.UtcNow;
+                        context.EntityEntry.Property("CreationTime").CurrentValue = EnableLocalTime ? DateTime.Now : DateTime.UtcNow;
                     }
                 }
             );

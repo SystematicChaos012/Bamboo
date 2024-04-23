@@ -6,9 +6,9 @@ namespace Audit.AuditProperties
     /// <summary>
     /// 逻辑删除审计属性
     /// </summary>
-    internal sealed class LogicalDeletionAuditProperty : AuditProperty
+    internal sealed class LogicalDeletionAuditPropertyCreator : AuditPropertyCreator
     {
-        public override Property Create(Type entityType)
+        public override AuditProperty Create(Type entityType)
         {
             return new (
                 builder =>
