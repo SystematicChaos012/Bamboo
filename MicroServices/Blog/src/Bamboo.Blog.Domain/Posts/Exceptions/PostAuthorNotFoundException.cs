@@ -1,6 +1,6 @@
 ﻿using SharedKernel.Domain;
 
-namespace Bamboo
+namespace Bamboo.Posts.Exceptions
 {
     /// <summary>
     /// 文章无作者异常
