@@ -1,6 +1,7 @@
 ﻿using Audit;
 using Audit.AuditProperties;
 using Bamboo.Posts;
+using Bamboo.Posts.ValueObjects;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Domain;
@@ -30,7 +31,7 @@ namespace Bamboo.EntityFrameworkCore
 
                 p.HasKey(p => p.Id).IsClustered(true);
 
-                p.Property(p => p.Id).UseIdentityColumn(1, 1).IsRequired();
+                p.Property(p => p.Id).IsRequired().HasConversion(x => x.Value, x => new PostId(x));
                 p.Property(p => p.Title).IsRequired().HasMaxLength(50);
                 p.Property(p => p.Content).IsRequired().HasMaxLength(-1);
                 p.Property(p => p.AuthorId).IsRequired();

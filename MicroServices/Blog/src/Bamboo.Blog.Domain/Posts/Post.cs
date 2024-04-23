@@ -46,7 +46,7 @@ namespace Bamboo.Posts
         /// <summary>
         /// 更新标题
         /// </summary>
-        public void UpdateTitle() => RaiseEvent(new PostTitleChangedDomainEvent(Id, Content));
+        public void UpdateTitle(string title) => RaiseEvent(new PostTitleChangedDomainEvent(Id, title));
 
         /// <summary>
         /// 删除文章

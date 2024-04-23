@@ -14,6 +14,8 @@ namespace Audit.AuditProperties
         public override Property Create(Type entityType)
         {
             var type = AuditHelper.GetNullableTypeOfGenericArgument(entityType, typeof(IDeleter<>), 0);
+            var orignalType = type.GetGenericArguments()[0];
+
             return new (
                 builder =>
                 {
@@ -24,7 +26,7 @@ namespace Audit.AuditProperties
                     if (context.EntityState == EntityState.Deleted)
                     {
                         var currentUser = context.ServiceProvider.GetRequiredService<ICurrentUser>();
-                        context.EntityEntry.Property("Deleter").CurrentValue = AuditHelper.Parse(type, currentUser.Id);
+                        context.EntityEntry.Property("Deleter").CurrentValue = AuditHelper.Parse(orignalType, currentUser.Id);
                     }
                 }
             );

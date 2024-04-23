@@ -18,7 +18,7 @@ namespace Audit.AuditProperties
             return new (
                 builder =>
                 {
-                    builder.Property<DateTime?>("DeletionTime").IsRequired();
+                    builder.Property<DateTime?>("DeletionTime");
                 },
                 context =>
                 {
