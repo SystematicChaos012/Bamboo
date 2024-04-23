@@ -34,8 +34,10 @@ namespace Audit
         public void Dispose()
         {
             Context.Dispose();
+            SqliteConnection.Close();
             SqliteConnection.Dispose();
             ServiceProvider.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         private class FakeCurrentUser : ICurrentUser
