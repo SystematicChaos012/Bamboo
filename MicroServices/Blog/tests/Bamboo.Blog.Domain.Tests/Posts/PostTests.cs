@@ -75,6 +75,28 @@ namespace Bamboo.Posts
             Assert.Throws<PostAlreadyPublishedException>(post.ToPublish);
         }
 
+        [Fact]
+        public void Post_Change_Title()
+        {
+            var post = CreatePost();
+            var newTitle = "New Title";
+
+            post.ChangeTitle(newTitle);
+
+            Assert.Equal(newTitle, post.Title);
+        }
+
+        [Fact]
+        public void Post_Change_Content()
+        {
+            var post = CreatePost();
+            var newContent = "New Content";
+
+            post.ChangeContent(newContent);
+
+            Assert.Equal(newContent, post.Content);
+        }
+
         private static Post CreatePost()
         {
             var postId = new PostId(Guid.NewGuid());

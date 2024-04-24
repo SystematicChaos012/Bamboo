@@ -75,6 +75,24 @@ namespace Bamboo.Posts
         }
 
         /// <summary>
+        /// 更改标题
+        /// </summary>
+        /// <param name="title">标题</param>
+        public void ChangeTitle(string title)
+        {
+            RaiseEvent(new PostTitleChangedDomainEvent(Id, Title, title));
+        }
+
+        /// <summary>
+        /// 更改内容
+        /// </summary>
+        /// <param name="content">内容</param>
+        public void ChangeContent(string content)
+        {
+            RaiseEvent(new PostContentChangedDomainEvent(Id, Content, content));
+        }
+
+        /// <summary>
         /// 发布
         /// </summary>
         /// <exception cref="PostAlreadyPublishedException">文章已发布异常</exception>
@@ -95,12 +113,13 @@ namespace Bamboo.Posts
         }
     }
 
-    partial class Post : IDomainEventApplier<PostCreatedDomainEvent>, IDomainEventApplier<PostAuthorAddedDomainEvent>, IDomainEventApplier<PostPublishedDomainEvent>
+    partial class Post 
+        : IDomainEventApplier<PostCreatedDomainEvent>, IDomainEventApplier<PostAuthorAddedDomainEvent>, IDomainEventApplier<PostPublishedDomainEvent>
+        , IDomainEventApplier<PostTitleChangedDomainEvent>, IDomainEventApplier<PostContentChangedDomainEvent>
     {
         void IDomainEventApplier<PostCreatedDomainEvent>.Apply(PostCreatedDomainEvent domainEvent)
         {
-            (Id, Title, Content) = domainEvent;
-            Status = PostStatus.Draft;
+            ((Id, Title, Content), Status) = (domainEvent, PostStatus.Draft);
         }
 
         void IDomainEventApplier<PostAuthorAddedDomainEvent>.Apply(PostAuthorAddedDomainEvent domainEvent)
@@ -110,8 +129,17 @@ namespace Bamboo.Posts
 
         void IDomainEventApplier<PostPublishedDomainEvent>.Apply(PostPublishedDomainEvent domainEvent)
         {
-            Status = PostStatus.Published;
-            PostedTime = DateTime.UtcNow;
+            (Status, PostedTime) = (PostStatus.Published, DateTime.UtcNow);
+        }
+
+        void IDomainEventApplier<PostTitleChangedDomainEvent>.Apply(PostTitleChangedDomainEvent domainEvent)
+        {
+            Title = domainEvent.NewTitle;
+        }
+
+        void IDomainEventApplier<PostContentChangedDomainEvent>.Apply(PostContentChangedDomainEvent domainEvent)
+        {
+            Content = domainEvent.NewContent;
         }
     }
 }
