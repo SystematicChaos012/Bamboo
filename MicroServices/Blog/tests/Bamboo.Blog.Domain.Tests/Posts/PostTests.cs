@@ -16,10 +16,10 @@ namespace Bamboo.Posts
 
             var post = new Post(postId, title, content);
 
-            Assert.Equal(post.Id, postId);
-            Assert.Equal(post.Title, title);
-            Assert.Equal(post.Content, content);
-            Assert.Equal(post.Status, PostStatus.Draft);
+            Assert.Equal(postId, post.Id);
+            Assert.Equal(title, post.Title);
+            Assert.Equal(content, post.Content);
+            Assert.Equal(PostStatus.Draft, post.Status);
             Assert.Null(post.PostedTime);
         }
 
@@ -33,9 +33,9 @@ namespace Bamboo.Posts
             post.AddAuthor(authorId, authorName);
 
             var author = Assert.Single(post.Authors);
-            Assert.Equal(author.Id, authorId);
-            Assert.Equal(author.Name, authorName);
-            Assert.Equal(author.PostId, post.Id);
+            Assert.Equal(authorId, author.Id);
+            Assert.Equal(authorName, author.Name);
+            Assert.Equal(post.Id, author.PostId);
         }
 
         [Fact]
