@@ -3,7 +3,7 @@
 namespace SharedKernel.Profiles
 {
     /// <summary>
-    /// 当前用户
+    /// 当前用户 
     /// </summary>
     public interface ICurrentUser
     {
