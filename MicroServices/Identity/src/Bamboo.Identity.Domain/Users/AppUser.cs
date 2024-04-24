@@ -6,13 +6,13 @@ namespace Bamboo.Identity
     /// <summary>
     /// 用户信息
     /// </summary>
-    public class IdentityUser 
+    public class AppUser 
         : AggregateRoot<Guid>
         , IConcurrencyStamp, ICreationTime, ICreator<Guid>, IModificationTime, IModifier<Guid>, IDeletionTime, IDeleter<Guid>, ILogicalDeletion
     {
         /// <summary>
         /// Used by EF Core
         /// </summary>
-        private IdentityUser() { }
+        private AppUser() { }
     }
 }

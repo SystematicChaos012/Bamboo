@@ -16,4 +16,8 @@
     <ProjectReference Include="..\..\..\..\Components\Audit\src\Audit\Audit.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Roles\" />
+  </ItemGroup>
+
 </Project>
