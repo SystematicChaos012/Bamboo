@@ -52,8 +52,10 @@ namespace Bamboo.Posts
         /// <param name="id">文章 Id</param>
         /// <param name="title">标题</param>
         /// <param name="content">内容</param>
-        public Post(PostId id, string title, string content) => 
+        public Post(PostId id, string title, string content)
+        {
             RaiseEvent(new PostCreatedDomainEvent(id, title, content));
+        }
 
         /// <summary>
         /// 添加作者
