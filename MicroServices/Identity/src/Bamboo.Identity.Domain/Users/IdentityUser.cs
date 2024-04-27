@@ -113,6 +113,8 @@ namespace Bamboo.Identity
             RaiseEvent(new IdentityUserCreatedDomainEvent(id, userName, email));
         }
 
+        #region AggregateRoot
+
         /// <summary>
         /// 更改用户名
         /// </summary>
@@ -223,6 +225,10 @@ namespace Bamboo.Identity
             RaiseEvent(new IdentityUserAccessFailedDomainEvent(Id));
         }
 
+        #endregion
+
+        #region Claim
+
         /// <summary>
         /// 添加声明
         /// </summary>
@@ -255,6 +261,10 @@ namespace Bamboo.Identity
             RaiseEvent(new IdentityUserClaimRemovedDomainEvent(Id, userClaim));
         }
 
+        #endregion
+
+        #region Token
+
         /// <summary>
         /// 添加令牌
         /// </summary>
@@ -286,6 +296,8 @@ namespace Bamboo.Identity
 
             RaiseEvent(new IdentityUserTokenRemovedDomainEvent(Id, userToken));
         }
+
+        #endregion
     }
 
     partial class IdentityUser 
