@@ -118,8 +118,11 @@ namespace Bamboo.Posts
     }
 
     partial class Post 
-        : IDomainEventApplier<PostCreatedDomainEvent>, IDomainEventApplier<PostAuthorAddedDomainEvent>, IDomainEventApplier<PostPublishedDomainEvent>
-        , IDomainEventApplier<PostTitleChangedDomainEvent>, IDomainEventApplier<PostContentChangedDomainEvent>
+        : IDomainEventApplier<PostCreatedDomainEvent>
+        , IDomainEventApplier<PostAuthorAddedDomainEvent>
+        , IDomainEventApplier<PostPublishedDomainEvent>
+        , IDomainEventApplier<PostTitleChangedDomainEvent>
+        , IDomainEventApplier<PostContentChangedDomainEvent>
     {
         void IDomainEventApplier<PostCreatedDomainEvent>.Apply(PostCreatedDomainEvent domainEvent)
         {
