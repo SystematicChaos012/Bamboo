@@ -1,4 +1,6 @@
 ﻿using Audit;
+using Bamboo.Users.DomainEvents;
+using Bamboo.Users.ValueObjects;
 using SharedKernel.Domain;
 
 namespace Bamboo.Identity
@@ -6,8 +8,8 @@ namespace Bamboo.Identity
     /// <summary>
     /// 用户信息
     /// </summary>
-    public class IdentityUser
-        : AggregateRoot<Guid>
+    public partial class IdentityUser
+        : AggregateRoot<IdentityUserId>
         , IConcurrencyStamp, ICreationTime, ICreator<Guid>, IModificationTime, IModifier<Guid>, IDeletionTime, IDeleter<Guid>, ILogicalDeletion
     {
 #nullable disable
@@ -83,5 +85,25 @@ namespace Bamboo.Identity
         /// Used by EF Core
         /// </summary>
         private IdentityUser() { }
+
+        /// <summary>
+        /// 创建用户
+        /// </summary>
+        /// <param name="id">User Id</param>
+        /// <param name="userName">用户名</param>
+        /// <param name="email">邮箱</param>
+        public IdentityUser(IdentityUserId id, string userName, string email)
+        {
+            RaiseEvent(new IdentityUserCreatedDomainEvent(id, userName, email));
+        }
+    }
+
+    partial class IdentityUser : IDomainEventApplier<IdentityUserCreatedDomainEvent>
+    {
+        void IDomainEventApplier<IdentityUserCreatedDomainEvent>.Apply(IdentityUserCreatedDomainEvent domainEvent)
+        {
+            (Id, UserName, Email) = domainEvent;
+            (NormalizedUserName, NormalizedEmail) = (UserName.ToUpperInvariant(), Email.ToUpperInvariant());
+        }
     }
 }
