@@ -26,7 +26,10 @@ namespace Audit.AuditProperties
                     if (context.EntityState == EntityState.Modified)
                     {
                         var currentUser = context.ServiceProvider.GetRequiredService<ICurrentUser>();
-                        context.EntityEntry.Property("Modifier").CurrentValue = AuditHelper.Parse(orignalType, currentUser.Id);
+                        if (currentUser.IsAuthenticated)
+                        {
+                            context.EntityEntry.Property("Modifier").CurrentValue = AuditHelper.Parse(orignalType, currentUser.Id);
+                        }
                     }
                 }
             );

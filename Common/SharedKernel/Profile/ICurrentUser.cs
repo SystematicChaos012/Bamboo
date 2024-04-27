@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
 
 namespace SharedKernel.Profiles
 {
@@ -10,12 +11,19 @@ namespace SharedKernel.Profiles
         /// <summary>
         /// Id
         /// </summary>
-        string Id { get; }
+        string? Id { get; }
 
         /// <summary>
         /// Id
         /// </summary>
-        string Name { get; }
+        string? Name { get; }
+
+        /// <summary>
+        /// 是否认证
+        /// </summary>
+        [MemberNotNullWhen(true, nameof(Id))]
+        [MemberNotNullWhen(true, nameof(Name))]
+        bool IsAuthenticated { get; }
 
         /// <summary>
         /// 查找声明

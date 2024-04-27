@@ -7,14 +7,14 @@ using System.Security.Claims;
 
 namespace Audit
 {
-    public class UnitTestBase : IDisposable
+    public class UnitTestWithoutAuthBase : IDisposable
     {
         protected ICurrentUser CurrentUser { get; }
         protected ServiceProvider ServiceProvider { get; }
         protected SqliteConnection SqliteConnection { get; }
         protected AuditDbContext Context { get; }
 
-        public UnitTestBase()
+        public UnitTestWithoutAuthBase()
         {
             CurrentUser = new FakeCurrentUser();
             SqliteConnection = new SqliteConnection("DataSource=:memory:");
@@ -42,11 +42,11 @@ namespace Audit
 
         private class FakeCurrentUser : ICurrentUser
         {
-            public string Id => "1";
+            public string? Id => null;
 
-            public string Name => "Alice";
+            public string? Name => null;
 
-            public bool IsAuthenticated => true;
+            public bool IsAuthenticated => false;
 
             public Claim? FindClaim(string claimType) => null;
         }

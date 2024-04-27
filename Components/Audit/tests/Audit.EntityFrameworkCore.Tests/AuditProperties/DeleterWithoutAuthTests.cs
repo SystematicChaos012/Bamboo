@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class DeleterTests : UnitTestBase
+    public class DeleterWithoutAuthTests : UnitTestWithoutAuthBase
     {
         [Fact]
         public void Generate_Deleter_When_Deleted()
@@ -16,7 +16,7 @@ namespace Audit.AuditProperties
             Context.SaveChanges();
 
             Assert.NotNull(Context.Entry(entity).Property("Deleter"));
-            Assert.Equal(Context.Entry(entity).Property("Deleter").CurrentValue, int.Parse(CurrentUser.Id!));
+            Assert.Null(Context.Entry(entity).Property("Deleter").CurrentValue);
         }
     }
 }

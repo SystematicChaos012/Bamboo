@@ -26,7 +26,10 @@ namespace Audit.AuditProperties
                     if (context.EntityState == EntityState.Deleted)
                     {
                         var currentUser = context.ServiceProvider.GetRequiredService<ICurrentUser>();
-                        context.EntityEntry.Property("Deleter").CurrentValue = AuditHelper.Parse(orignalType, currentUser.Id);
+                        if (currentUser.IsAuthenticated)
+                        {
+                            context.EntityEntry.Property("Deleter").CurrentValue = AuditHelper.Parse(orignalType, currentUser.Id);
+                        }
                     }
                 }
             );

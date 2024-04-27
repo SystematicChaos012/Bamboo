@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class ModifierTests : UnitTestBase
+    public class ModifierWithoutAuthTest : UnitTestWithoutAuthBase
     {
         [Fact]
         public void Generate_Modifier_When_Modified()
@@ -16,7 +16,7 @@ namespace Audit.AuditProperties
             Context.SaveChanges();
 
             Assert.NotNull(Context.Entry(entity).Property("Modifier"));
-            Assert.Equal(Context.Entry(entity).Property("Modifier").CurrentValue, int.Parse(CurrentUser.Id!));
+            Assert.Null(Context.Entry(entity).Property("Modifier").CurrentValue);
         }
     }
 }

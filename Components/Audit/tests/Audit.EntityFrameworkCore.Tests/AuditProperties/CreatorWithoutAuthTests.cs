@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class CreatorTests : UnitTestBase
+    public class CreatorWithoutAuthTests : UnitTestWithoutAuthBase
     {
         [Fact]
         public void Generate_Creator_When_Added()
@@ -13,7 +13,7 @@ namespace Audit.AuditProperties
             Context.SaveChanges();
 
             Assert.NotNull(Context.Entry(entity).Property("Creator"));
-            Assert.Equal(Context.Entry(entity).Property("Creator").CurrentValue, int.Parse(CurrentUser.Id!));
+            Assert.Null(Context.Entry(entity).Property("Creator").CurrentValue);
         }
     }
 }
