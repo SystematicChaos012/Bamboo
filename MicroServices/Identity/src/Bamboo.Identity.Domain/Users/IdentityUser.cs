@@ -8,7 +8,7 @@ namespace Bamboo.Identity
     /// <summary>
     /// 用户信息
     /// </summary>
-    public partial class IdentityUser
+    public sealed partial class IdentityUser
         : AggregateRoot<IdentityUserId>
         , IConcurrencyStamp, ICreationTime, ICreator<Guid>, IModificationTime, IModifier<Guid>, IDeletionTime, IDeleter<Guid>, ILogicalDeletion
     {

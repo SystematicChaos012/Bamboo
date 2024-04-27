@@ -9,5 +9,5 @@ namespace Bamboo.Posts
     /// <param name="Id">Post Id</param>
     /// <param name="OldTitle">旧标题</param>
     /// <param name="NewTitle">新标题</param>
-    public record class PostTitleChangedDomainEvent(PostId Id, string OldTitle, string NewTitle) : DomainEvent;
+    public sealed record class PostTitleChangedDomainEvent(PostId Id, string OldTitle, string NewTitle) : DomainEvent;
 }

@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class DeleterTests : UnitTestBase
+    public sealed class DeleterTests : UnitTestBase
     {
         [Fact]
         public void Generate_Deleter_When_Deleted()

@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class CreationTimeTests : UnitTestBase
+    public sealed class CreationTimeTests : UnitTestBase
     {
         [Fact]
         public void Generate_CreateTime_When_Added()

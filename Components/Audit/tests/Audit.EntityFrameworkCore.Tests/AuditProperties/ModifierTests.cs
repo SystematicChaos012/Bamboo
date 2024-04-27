@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class ModifierTests : UnitTestBase
+    public sealed class ModifierTests : UnitTestBase
     {
         [Fact]
         public void Generate_Modifier_When_Modified()

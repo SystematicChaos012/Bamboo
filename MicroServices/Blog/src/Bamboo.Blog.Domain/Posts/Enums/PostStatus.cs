@@ -5,7 +5,7 @@ namespace Bamboo.Posts.Enums
     /// <summary>
     /// 主题状态
     /// </summary>
-    public class PostStatus(string name, int value) : SmartEnum<PostStatus>(name, value)
+    public sealed class PostStatus(string name, int value) : SmartEnum<PostStatus>(name, value)
     {
         /// <summary>
         /// 草稿

@@ -6,7 +6,7 @@ namespace Bamboo.Posts.Entities
     /// <summary>
     /// 作者
     /// </summary>
-    public class PostAuthor(PostAuthorId id, PostId postId, string name) : Entity<PostAuthorId>(id)
+    public sealed class PostAuthor(PostAuthorId id, PostId postId, string name) : Entity<PostAuthorId>(id)
     {
         /// <summary>
         /// 文章 Id

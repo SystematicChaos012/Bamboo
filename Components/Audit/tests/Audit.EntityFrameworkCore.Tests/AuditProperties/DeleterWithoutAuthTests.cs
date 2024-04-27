@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class DeleterWithoutAuthTests : UnitTestWithoutAuthBase
+    public sealed class DeleterWithoutAuthTests : UnitTestWithoutAuthBase
     {
         [Fact]
         public void Generate_Deleter_When_Deleted()

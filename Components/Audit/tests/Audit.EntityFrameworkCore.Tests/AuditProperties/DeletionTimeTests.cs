@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class DeletionTimeTests : UnitTestBase
+    public sealed class DeletionTimeTests : UnitTestBase
     {
         [Fact]
         public void Generate_DeletionTime_When_Deleted()

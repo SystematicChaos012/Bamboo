@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class CreatorWithoutAuthTests : UnitTestWithoutAuthBase
+    public sealed class CreatorWithoutAuthTests : UnitTestWithoutAuthBase
     {
         [Fact]
         public void Generate_Creator_When_Added()

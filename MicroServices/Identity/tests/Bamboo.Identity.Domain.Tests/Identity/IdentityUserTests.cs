@@ -2,7 +2,7 @@
 
 namespace Bamboo.Identity.Domain.Tests.Identity
 {
-    public class IdentityUserTests
+    public sealed class IdentityUserTests
     {
         [Fact]
         public void IdentityUser_Create()

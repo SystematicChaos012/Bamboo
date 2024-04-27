@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Audit.EntityFrameworkCore
 {
-    public class AuditDbContext(IServiceProvider serviceProvider, DbContextOptions<AuditDbContext> options) : DbContext(options)
+    public sealed class AuditDbContext(IServiceProvider serviceProvider, DbContextOptions<AuditDbContext> options) : DbContext(options)
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

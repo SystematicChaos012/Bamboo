@@ -9,5 +9,5 @@ namespace Bamboo.Posts.DomainEvents
     /// <param name="Id">作者 Id</param>
     /// <param name="PostId">文章 Id</param>
     /// <param name="Name">作者名称</param>
-    public record class PostAuthorAddedDomainEvent(PostAuthorId Id, PostId PostId, string Name) : DomainEvent;
+    public sealed record class PostAuthorAddedDomainEvent(PostAuthorId Id, PostId PostId, string Name) : DomainEvent;
 }

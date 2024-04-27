@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class ConcurrencyStampTests : UnitTestBase
+    public sealed class ConcurrencyStampTests : UnitTestBase
     {
         [Fact]
         public void Generate_ConcurrencyStamp_When_Added()

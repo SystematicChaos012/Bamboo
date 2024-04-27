@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class ModifierWithoutAuthTest : UnitTestWithoutAuthBase
+    public sealed class ModifierWithoutAuthTest : UnitTestWithoutAuthBase
     {
         [Fact]
         public void Generate_Modifier_When_Modified()

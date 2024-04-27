@@ -2,7 +2,7 @@
 
 namespace Audit.AuditProperties
 {
-    public class ModificationTimeTests : UnitTestBase
+    public sealed class ModificationTimeTests : UnitTestBase
     {
         [Fact]
         public void Generate_ModificationTime_When_Modified()

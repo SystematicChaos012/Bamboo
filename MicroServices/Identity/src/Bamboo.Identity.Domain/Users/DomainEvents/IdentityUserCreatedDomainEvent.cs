@@ -9,5 +9,5 @@ namespace Bamboo.Users.DomainEvents
     /// <param name="Id">User Id</param>
     /// <param name="UserName">用户名</param>
     /// <param name="Email">邮箱</param>
-    public record class IdentityUserCreatedDomainEvent(IdentityUserId Id, string UserName, string Email) : DomainEvent;
+    public sealed record class IdentityUserCreatedDomainEvent(IdentityUserId Id, string UserName, string Email) : DomainEvent;
 }

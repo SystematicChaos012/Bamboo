@@ -5,7 +5,7 @@ using Bamboo.Posts.ValueObjects;
 
 namespace Bamboo.Posts
 {
-    public class PostTests
+    public sealed class PostTests
     {
         [Fact]
         public void Post_Create()
