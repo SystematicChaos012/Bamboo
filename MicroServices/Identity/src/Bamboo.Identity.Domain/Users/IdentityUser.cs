@@ -89,6 +89,12 @@ namespace Bamboo.Identity
         public ICollection<IdentityUserClaim> Claims => _claims.AsReadOnly();
         private readonly List<IdentityUserClaim> _claims = [];
 
+        /// <summary>
+        /// 令牌
+        /// </summary>
+        public ICollection<IdentityUserToken> Tokens => _tokens.AsReadOnly();
+        private readonly List<IdentityUserToken> _tokens = [];
+
 #nullable enable
 
         /// <summary>
@@ -248,6 +254,38 @@ namespace Bamboo.Identity
 
             RaiseEvent(new IdentityUserClaimRemovedDomainEvent(Id, userClaim));
         }
+
+        /// <summary>
+        /// 添加令牌
+        /// </summary>
+        /// <param name="tokenId">令牌 Id</param>
+        /// <param name="loginProvider">登录提供者</param>
+        /// <param name="name">名称</param>
+        public void AddToken(IdentityUserTokenId tokenId, string loginProvider, string name)
+        {
+            if (_tokens.Exists(x => x.Id == tokenId || x.LoginProvider == loginProvider))
+            {
+                throw new IdentityUserTokenAlreadyExistsException();
+            }
+
+            RaiseEvent(new IdentityUserTokenAddedDomainEvent(Id, tokenId, loginProvider, name));
+        }
+
+        /// <summary>
+        /// 删除令牌
+        /// </summary>
+        /// <param name="tokenId">令牌 Id</param>
+        /// <exception cref="IdentityUserTokenNotFoundException">用户令牌不存在异常</exception>
+        public void RemoveToken(IdentityUserTokenId tokenId)
+        {
+            var userToken = _tokens.Find(x => x.Id == tokenId);
+            if (userToken is null)
+            {
+                throw new IdentityUserTokenNotFoundException();
+            }
+
+            RaiseEvent(new IdentityUserTokenRemovedDomainEvent(Id, userToken));
+        }
     }
 
     partial class IdentityUser 
@@ -264,6 +302,8 @@ namespace Bamboo.Identity
         , IDomainEventApplier<IdentityUserSecurityStampChangedDomainEvent>
         , IDomainEventApplier<IdentityUserClaimAddedDomainEvent>
         , IDomainEventApplier<IdentityUserClaimRemovedDomainEvent>
+        , IDomainEventApplier<IdentityUserTokenAddedDomainEvent>
+        , IDomainEventApplier<IdentityUserTokenRemovedDomainEvent>
     {
         void IDomainEventApplier<IdentityUserCreatedDomainEvent>.Apply(IdentityUserCreatedDomainEvent domainEvent)
         {
@@ -335,6 +375,16 @@ namespace Bamboo.Identity
         void IDomainEventApplier<IdentityUserClaimRemovedDomainEvent>.Apply(IdentityUserClaimRemovedDomainEvent domainEvent)
         {
             _claims.Remove(domainEvent.Claim);
+        }
+
+        void IDomainEventApplier<IdentityUserTokenAddedDomainEvent>.Apply(IdentityUserTokenAddedDomainEvent domainEvent)
+        {
+            _tokens.Add(new IdentityUserToken(Id, domainEvent.TokenId, domainEvent.LoginProvider, domainEvent.Name));
+        }
+
+        void IDomainEventApplier<IdentityUserTokenRemovedDomainEvent>.Apply(IdentityUserTokenRemovedDomainEvent domainEvent)
+        {
+            _tokens.Remove(domainEvent.Token);
         }
     }
 }

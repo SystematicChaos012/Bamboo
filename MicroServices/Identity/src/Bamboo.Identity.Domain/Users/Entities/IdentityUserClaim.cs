@@ -69,6 +69,17 @@ namespace Bamboo.Users.Entities
         }
 
         /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+            hash.Add(Id);
+            hash.Add(UserId);
+            hash.Add(ClaimType);
+            hash.Add(ClaimValue);
+            return hash.ToHashCode();
+        }
+
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return Equals(obj as IdentityUserClaim);

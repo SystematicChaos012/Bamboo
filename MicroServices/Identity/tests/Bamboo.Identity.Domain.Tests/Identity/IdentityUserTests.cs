@@ -275,6 +275,65 @@ namespace Bamboo.Identity.Domain.Tests.Identity
             Assert.Throws<IdentityUserClaimNotFoundException>(() => identityUser.RemoveClaim(new IdentityUserClaimId(Guid.NewGuid())));
         }
 
+        [Fact]
+        public void IdentityUser_AddToken()
+        {
+            var identityUser = CreateIdentityUser();
+            var tokenId = new IdentityUserTokenId(Guid.NewGuid());
+            var loginProvider = "loginProvider";
+            var name = "name";
+
+            identityUser.AddToken(tokenId, loginProvider, name);
+
+            Assert.Contains(identityUser.Tokens, x => x.Id == tokenId && x.LoginProvider == loginProvider && x.Name == name);
+        }
+
+        [Fact]
+        public void IdentityUser_AddToken_When_TokenAlreadyExists()
+        {
+            var identityUser = Create(out var token);
+
+            Assert.Throws<IdentityUserTokenAlreadyExistsException>(() => identityUser.AddToken(token.Id, token.LoginProvider, token.Name));
+
+            static IdentityUser Create(out IdentityUserToken token)
+            {
+                var t = CreateIdentityUser();
+                t.AddToken(new IdentityUserTokenId(Guid.NewGuid()), "loginProvider", "name");
+
+                token = t.Tokens.First();
+
+                return t;
+            }
+        }
+
+        [Fact]
+        public void IdentityUser_RemoveToken()
+        {
+            var identityUser = Create(out var token);
+
+            identityUser.RemoveToken(token.Id);
+
+            Assert.Empty(identityUser.Tokens);
+
+            static IdentityUser Create(out IdentityUserToken token)
+            {
+                var t = CreateIdentityUser();
+                t.AddToken(new IdentityUserTokenId(Guid.NewGuid()), "loginProvider", "name");
+
+                token = t.Tokens.First();
+
+                return t;
+            }
+        }
+
+        [Fact]
+        public void IdentityUser_RemoveToken_When_TokenNotFound()
+        {
+            var identityUser = CreateIdentityUser();
+
+            Assert.Throws<IdentityUserTokenNotFoundException>(() => identityUser.RemoveToken(new IdentityUserTokenId(Guid.NewGuid())));
+        }
+
         private static IdentityUser CreateIdentityUser()
         {
             return new IdentityUser(
