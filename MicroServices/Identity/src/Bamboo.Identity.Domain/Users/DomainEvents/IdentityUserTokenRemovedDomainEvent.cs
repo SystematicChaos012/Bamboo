@@ -2,7 +2,7 @@
 using Bamboo.Users.ValueObjects;
 using SharedKernel.Domain;
 
-namespace Bamboo.Identity
+namespace Bamboo.Users.DomainEvents
 {
     /// <summary>
     /// 用户令牌移除领域事件
