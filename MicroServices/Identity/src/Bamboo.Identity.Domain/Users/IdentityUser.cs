@@ -1,9 +1,11 @@
 ﻿using Audit;
 using Bamboo.Users.DomainEvents;
+using Bamboo.Users.Entities;
 using Bamboo.Users.Exceptions;
 using Bamboo.Users.Policies;
 using Bamboo.Users.ValueObjects;
 using SharedKernel.Domain;
+using System.Security.Claims;
 
 namespace Bamboo.Identity
 {
@@ -80,6 +82,12 @@ namespace Bamboo.Identity
         /// 访问失败次数
         /// </summary>
         public int AccessFailedCount { get; private set; }
+
+        /// <summary>
+        /// 声明
+        /// </summary>
+        public ICollection<IdentityUserClaim> Claims => _claims.AsReadOnly();
+        private readonly List<IdentityUserClaim> _claims = [];
 
 #nullable enable
 
@@ -208,6 +216,33 @@ namespace Bamboo.Identity
         {
             RaiseEvent(new IdentityUserAccessFailedDomainEvent(Id));
         }
+
+        /// <summary>
+        /// 添加声明
+        /// </summary>
+        /// <param name="claimId">声明 Id</param>
+        /// <param name="claimType">声明类型</param>
+        /// <param name="claimValue">声明值</param>
+        public void AddClaim(IdentityUserClaimId claimId, string claimType, string claimValue)
+        {
+            RaiseEvent(new IdentityUserClaimAddedDomainEvent(Id, claimId, claimType, claimValue));
+        }
+
+        /// <summary>
+        /// 删除声明
+        /// </summary>
+        /// <param name="claimId">声明 Id</param>
+        /// <exception cref="IdentityUserClaimNotFoundException">声明未找到异常</exception>
+        public void RemoveClaim(IdentityUserClaimId claimId)
+        {
+            var userClaim = _claims.Find(x => x.Id == claimId);
+            if (userClaim is null)
+            {
+                throw new IdentityUserClaimNotFoundException();
+            }
+
+            RaiseEvent(new IdentityUserClaimRemovedDomainEvent(Id, userClaim));
+        }
     }
 
     partial class IdentityUser 
@@ -222,6 +257,8 @@ namespace Bamboo.Identity
         , IDomainEventApplier<IdentityUserUnlockDomainEvent>
         , IDomainEventApplier<IdentityUserPasswordChangedDomainEvent>
         , IDomainEventApplier<IdentityUserSecurityStampChangedDomainEvent>
+        , IDomainEventApplier<IdentityUserClaimAddedDomainEvent>
+        , IDomainEventApplier<IdentityUserClaimRemovedDomainEvent>
     {
         void IDomainEventApplier<IdentityUserCreatedDomainEvent>.Apply(IdentityUserCreatedDomainEvent domainEvent)
         {
@@ -283,6 +320,16 @@ namespace Bamboo.Identity
         void IDomainEventApplier<IdentityUserSecurityStampChangedDomainEvent>.Apply(IdentityUserSecurityStampChangedDomainEvent domainEvent)
         {
             SecurityStamp = domainEvent.SecurityStamp;
+        }
+
+        void IDomainEventApplier<IdentityUserClaimAddedDomainEvent>.Apply(IdentityUserClaimAddedDomainEvent domainEvent)
+        {
+            _claims.Add(new IdentityUserClaim(Id, domainEvent.ClaimId, domainEvent.ClaimType, domainEvent.ClaimValue));
+        }
+
+        void IDomainEventApplier<IdentityUserClaimRemovedDomainEvent>.Apply(IdentityUserClaimRemovedDomainEvent domainEvent)
+        {
+            _claims.Remove(domainEvent.Claim);
         }
     }
 }

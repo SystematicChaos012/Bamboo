@@ -1,4 +1,5 @@
-﻿using Bamboo.Users.Exceptions;
+﻿using Bamboo.Users.Entities;
+using Bamboo.Users.Exceptions;
 using Bamboo.Users.Policies;
 using Bamboo.Users.ValueObjects;
 using System.Security.Cryptography.X509Certificates;
@@ -213,6 +214,47 @@ namespace Bamboo.Identity.Domain.Tests.Identity
             identityUser.ChangeSecurityStamp();
 
             Assert.NotNull(identityUser.SecurityStamp);
+        }
+
+        [Fact]
+        public void IdentityUser_AddClaim()
+        {
+            var identityUser = CreateIdentityUser();
+            var claimId = new IdentityUserClaimId(Guid.NewGuid());
+            var claimType = "claimType";
+            var claimValue = "claimValue";
+
+            identityUser.AddClaim(claimId, claimType, claimValue);
+
+            Assert.Contains(identityUser.Claims, x => x.Id == claimId && x.ClaimType == claimType && x.ClaimValue == claimValue);
+        }
+
+        [Fact]
+        public void IdentityUser_RemoveClaim()
+        {
+            var identityUser = Create(out var claim);
+
+            identityUser.RemoveClaim(claim.Id);
+
+            Assert.Empty(identityUser.Claims);
+
+            static IdentityUser Create(out IdentityUserClaim claim)
+            {
+                var t = CreateIdentityUser();
+                t.AddClaim(new IdentityUserClaimId(Guid.NewGuid()), "claimType", "claimValue");
+
+                claim = t.Claims.First();
+
+                return t;
+            }
+        }
+
+        [Fact]
+        public void IdentityUser_RemoveClaim_When_NotFound()
+        {
+            var identityUser = CreateIdentityUser();
+
+            Assert.Throws<IdentityUserClaimNotFoundException>(() => identityUser.RemoveClaim(new IdentityUserClaimId(Guid.NewGuid())));
         }
 
         private static IdentityUser CreateIdentityUser()

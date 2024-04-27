@@ -1,6 +1,9 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
   <Folder Name="/MicroServices/Identity/tests/">
-    <Project Path="MicroServices\Identity\tests\Bamboo.Identity.Domain.Tests\Bamboo.Identity.Domain.Tests.csproj" Type="Classic C#" />
+    <Project Path="MicroServices\Identity\tests\Bamboo.Identity.Domain.Tests\Bamboo.Identity.Domain.Tests.csproj" />
   </Folder>
   <Folder Name="/MicroServices/Identity/src/">
     <Project Path="MicroServices\Identity\src\Bamboo.Identity.Domain\Bamboo.Identity.Domain.csproj" />
