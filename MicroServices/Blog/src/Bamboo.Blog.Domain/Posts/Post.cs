@@ -15,15 +15,17 @@ namespace Bamboo.Posts
         : AggregateRoot<PostId>
         , IConcurrencyStamp, ICreationTime, ICreator<Guid>, IModificationTime, IModifier<Guid>, IDeletionTime, IDeleter<Guid>, ILogicalDeletion
     {
+#nullable disable
+
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; private set; } = null!;
+        public string Title { get; private set; }
 
         /// <summary>
         /// 内容
         /// </summary>
-        public string Content { get; private set; } = null!;
+        public string Content { get; private set; }
 
         /// <summary>
         /// 发布时间
@@ -33,7 +35,9 @@ namespace Bamboo.Posts
         /// <summary>
         /// 状态
         /// </summary>
-        public PostStatus Status { get; private set; } = null!;
+        public PostStatus Status { get; private set; }
+
+#nullable enable
 
         /// <summary>
         /// 作者
