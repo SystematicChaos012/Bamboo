@@ -230,6 +230,24 @@ namespace Bamboo.Identity.Domain.Tests.Identity
         }
 
         [Fact]
+        public void IdentityUser_AddClaim_When_ClaimAlreadyExists()
+        {
+            var identityUser = Create(out var claim);
+
+            Assert.Throws<IdentityUserClaimAlreadyExistsException>(() => identityUser.AddClaim(claim.Id, claim.ClaimType, claim.ClaimValue));
+
+            static IdentityUser Create(out IdentityUserClaim claim)
+            {
+                var t = CreateIdentityUser();
+                t.AddClaim(new IdentityUserClaimId(Guid.NewGuid()), "claimType", "claimValue");
+
+                claim = t.Claims.First();
+
+                return t;
+            }
+        }
+
+        [Fact]
         public void IdentityUser_RemoveClaim()
         {
             var identityUser = Create(out var claim);
@@ -250,7 +268,7 @@ namespace Bamboo.Identity.Domain.Tests.Identity
         }
 
         [Fact]
-        public void IdentityUser_RemoveClaim_When_NotFound()
+        public void IdentityUser_RemoveClaim_When_ClaimNotFound()
         {
             var identityUser = CreateIdentityUser();
 

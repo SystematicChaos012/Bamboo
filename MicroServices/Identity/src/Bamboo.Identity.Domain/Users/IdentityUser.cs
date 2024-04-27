@@ -225,6 +225,11 @@ namespace Bamboo.Identity
         /// <param name="claimValue">声明值</param>
         public void AddClaim(IdentityUserClaimId claimId, string claimType, string claimValue)
         {
+            if (_claims.Exists(x => x.Id == claimId))
+            {
+                throw new IdentityUserClaimAlreadyExistsException(claimId);
+            }
+
             RaiseEvent(new IdentityUserClaimAddedDomainEvent(Id, claimId, claimType, claimValue));
         }
 
