@@ -5,16 +5,24 @@
     /// </summary>
     public class DomainException : Exception
     {
-        public DomainException() : base()
+        /// <summary>
+        /// 异常代码
+        /// </summary>
+        public string Code { get; private set; }
+
+        public DomainException(string code) : base()
         {
+            Code = code;
         }
 
-        public DomainException(string? message) : base(message)
+        public DomainException(string code, string? message) : base(message)
         {
+            Code = code;
         }
 
-        public DomainException(string? message, Exception? innerException) : base(message, innerException)
+        public DomainException(string code, string? message, Exception? innerException) : base(message, innerException)
         {
+            Code = code;
         }
     }
 }
