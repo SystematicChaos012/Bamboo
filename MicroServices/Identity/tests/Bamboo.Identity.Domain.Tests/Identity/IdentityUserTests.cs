@@ -137,7 +137,7 @@ namespace Bamboo.Identity.Domain.Tests.Identity
         {
             var identityUser = CreateIdentityUser();
 
-            identityUser.AccessFail();
+            identityUser.AccessFail(FakeIdentityUserLockoutPolicy.Instance, out _);
 
             Assert.Equal(1, identityUser.AccessFailedCount);
         }
@@ -151,6 +151,39 @@ namespace Bamboo.Identity.Domain.Tests.Identity
 
             Assert.True(identityUser.LockoutEnabled);
             Assert.NotNull(identityUser.LockoutEnd);
+        }
+
+        [Fact]
+        public void IdentityUser_Lockout_When_AccessFailedCountMoreThanMaxFailedAccessAttempts()
+        {
+            var identityUser = Create();
+
+            identityUser.AccessFail(FakeIdentityUserLockoutPolicy.Instance, out var lockedout);
+
+            Assert.True(lockedout);
+
+            static IdentityUser Create()
+            {
+                var t = CreateIdentityUser(FakeIdentityUserLockoutPolicy.LockoutUserId);
+
+                return t;
+            }
+        }
+
+        [Fact]
+        public void IdentityUser_Lockout_When_AccessFailedCountLessThanMaxFailedAccessAttempts()
+        {
+            var identityUser = Create();
+
+            identityUser.AccessFail(FakeIdentityUserLockoutPolicy.Instance, out var lockedout);
+
+            Assert.False(lockedout);
+
+            static IdentityUser Create()
+            {
+                var t = CreateIdentityUser();
+                return t;
+            }
         }
 
         [Fact]
@@ -336,19 +369,33 @@ namespace Bamboo.Identity.Domain.Tests.Identity
 
         private static IdentityUser CreateIdentityUser()
         {
-            return new IdentityUser(
-                new IdentityUserId(Guid.NewGuid()),
-                "alice",
-                "alice@bamboo.com");
+            return CreateIdentityUser(new IdentityUserId(Guid.NewGuid()));
+        }
+
+        private static IdentityUser CreateIdentityUser(IdentityUserId id)
+        {
+            return new IdentityUser(id, "alice", "alice@bamboo.com");
         }
 
         class FakeIdentityUserLockoutPolicy : IIdentityUserLockoutPolicy
         {
             public static FakeIdentityUserLockoutPolicy Instance => new FakeIdentityUserLockoutPolicy();
 
+            public static IdentityUserId LockoutUserId = new IdentityUserId(Guid.Empty);
+
             public DateTimeOffset CalcuteLockout(IdentityUserId id)
             {
                 return DateTimeOffset.UtcNow.AddMinutes(5);
+            }
+
+            public bool ShouldLockout(IdentityUserId id)
+            {
+                if (LockoutUserId == id)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
     }

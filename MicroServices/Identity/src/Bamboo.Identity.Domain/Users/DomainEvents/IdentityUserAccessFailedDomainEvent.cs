@@ -7,5 +7,5 @@ namespace Bamboo.Users.DomainEvents
     /// 用户登录失败事件
     /// </summary>
     /// <param name="Id">User Id</param>
-    public sealed record class IdentityUserAccessFailedDomainEvent(IdentityUserId Id) : DomainEvent;
+    public sealed record class IdentityUserAccessFailedDomainEvent(IdentityUserId Id) : DomainEvent, IDomainEventIgnorePersistent;
 }

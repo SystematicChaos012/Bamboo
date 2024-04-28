@@ -8,6 +8,11 @@ namespace Bamboo.Users.Policies
     public interface IIdentityUserLockoutPolicy
     {
         /// <summary>
+        /// 是否应该锁定
+        /// </summary>
+        bool ShouldLockout(IdentityUserId id);
+
+        /// <summary>
         /// 计算锁定时间
         /// </summary>
         /// <param name="id">User Id</param>

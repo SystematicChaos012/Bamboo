@@ -201,7 +201,7 @@ namespace Bamboo.Identity
 
             var lockoutEnd = lockoutPolicy.CalcuteLockout(Id);
 
-            RaiseEvent(new IdentityUserLockoutDomainEvent(Id, lockoutEnd));
+            RaiseEvent(new IdentityUserLockoutDomainEvent(Id, lockoutEnd, AccessFailedCount));
         }
 
         /// <summary>
@@ -220,9 +220,18 @@ namespace Bamboo.Identity
         /// <summary>
         /// 访问失败
         /// </summary>
-        public void AccessFail()
+        public void AccessFail(IIdentityUserLockoutPolicy lockoutPolicy, out bool lockedout)
         {
+            lockedout = false;
+            
             RaiseEvent(new IdentityUserAccessFailedDomainEvent(Id));
+
+            if (lockoutPolicy.ShouldLockout(Id))
+            {
+                Lockout(lockoutPolicy);
+
+                lockedout = true;
+            }
         }
 
         #endregion

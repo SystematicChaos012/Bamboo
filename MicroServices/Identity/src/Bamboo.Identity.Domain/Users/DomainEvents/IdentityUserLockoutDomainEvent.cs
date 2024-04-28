@@ -7,5 +7,7 @@ namespace Bamboo.Identity
     /// 用户锁定领域事件
     /// </summary>
     /// <param name="Id">User Id</param>
-    public sealed record class IdentityUserLockoutDomainEvent(IdentityUserId Id, DateTimeOffset LockoutEnd) : DomainEvent;
+    /// <param name="LockoutEnd">锁定截至时间</param>
+    /// <param name="AccessFailedCount">访问失败次数</param>
+    public sealed record class IdentityUserLockoutDomainEvent(IdentityUserId Id, DateTimeOffset LockoutEnd, int AccessFailedCount) : DomainEvent;
 }
