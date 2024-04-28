@@ -12,8 +12,4 @@
     <ProjectReference Include="..\..\..\..\Components\Audit\src\Audit\Audit.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Users\" />
-  </ItemGroup>
-
 </Project>
