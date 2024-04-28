@@ -16,7 +16,7 @@ namespace Audit.AuditProperties
             Context.SaveChanges();
 
             Assert.NotNull(Context.Entry(entity).Property("Modifier"));
-            Assert.Equal(Context.Entry(entity).Property("Modifier").CurrentValue, int.Parse(CurrentUser.Id!));
+            Assert.Equal(Context.Entry(entity).Property("Modifier").CurrentValue, int.Parse(IdentityContext.FindClaim(Options.IdentityClaimType)!));
         }
     }
 }

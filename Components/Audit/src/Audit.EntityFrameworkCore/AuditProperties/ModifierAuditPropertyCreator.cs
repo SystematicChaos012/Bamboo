@@ -1,7 +1,8 @@
 ﻿using Audit.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SharedKernel.Profiles;
+using Microsoft.Extensions.Options;
+using Security;
 
 namespace Audit.AuditProperties
 {
@@ -25,10 +26,11 @@ namespace Audit.AuditProperties
                 {
                     if (context.EntityState == EntityState.Modified)
                     {
-                        var currentUser = context.ServiceProvider.GetRequiredService<ICurrentUser>();
-                        if (currentUser.IsAuthenticated)
+                        var identityContext = context.ServiceProvider.GetRequiredService<IIdentityContext>();
+                        if (identityContext.IsAuthenticated)
                         {
-                            context.EntityEntry.Property("Modifier").CurrentValue = AuditHelper.Parse(orignalType, currentUser.Id);
+                            var options = context.ServiceProvider.GetRequiredService<IOptions<AuditOptions>>().Value;
+                            context.EntityEntry.Property("Modifier").CurrentValue = AuditHelper.Parse(orignalType, identityContext.FindClaim(options.IdentityClaimType)!);
                         }
                     }
                 }

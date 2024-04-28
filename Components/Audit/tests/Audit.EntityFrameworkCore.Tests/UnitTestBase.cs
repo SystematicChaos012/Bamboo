@@ -2,27 +2,32 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SharedKernel.Profiles;
+using Microsoft.Extensions.Options;
+using Security;
 using System.Security.Claims;
 
 namespace Audit
 {
     public class UnitTestBase : IDisposable
     {
-        protected ICurrentUser CurrentUser { get; }
+        protected IIdentityContext IdentityContext { get; }
         protected ServiceProvider ServiceProvider { get; }
+        protected AuditOptions Options { get; private set; }
         protected SqliteConnection SqliteConnection { get; }
         protected AuditDbContext Context { get; }
 
         public UnitTestBase()
         {
-            CurrentUser = new FakeCurrentUser();
+            IdentityContext = new FakeCurrentUser();
             SqliteConnection = new SqliteConnection("DataSource=:memory:");
             SqliteConnection.Open();
 
             ServiceProvider = new ServiceCollection()
-                .AddScoped(_ => CurrentUser)
+                .AddScoped(_ => IdentityContext)
+                .Configure<AuditOptions>((options) => { })
                 .BuildServiceProvider();
+
+            Options = ServiceProvider.GetRequiredService<IOptions<AuditOptions>>().Value;
 
             Context = new AuditDbContext(
                 ServiceProvider,
@@ -40,15 +45,23 @@ namespace Audit
             GC.SuppressFinalize(this);
         }
 
-        private class FakeCurrentUser : ICurrentUser
+        private class FakeCurrentUser : IIdentityContext
         {
-            public string Id => "1";
-
-            public string Name => "Alice";
-
             public bool IsAuthenticated => true;
 
-            public Claim? FindClaim(string claimType) => null;
+            public IEnumerable<string> FindClaims(string type)
+            {
+                throw new NotImplementedException();
+            }
+
+            public string? FindClaim(string type)
+            {
+                return type switch
+                {
+                    "sub" => "1",
+                    _ => null,
+                };
+            }
         }
     }
 }

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Common\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\..\..\Security\src\Security\Security.csproj" />
     <ProjectReference Include="..\Audit\Audit.csproj" />
   </ItemGroup>
 

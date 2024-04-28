@@ -20,6 +20,11 @@
   </Folder>
   <Folder Name="/MicroServices/Blog/" />
   <Folder Name="/MicroServices/" />
+  <Folder Name="/Components/Security/tests/" />
+  <Folder Name="/Components/Security/src/">
+    <Project Path="Components\Security\src\Security\Security.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Components/Security/" />
   <Folder Name="/Components/Audit/tests/">
     <Project Path="Components\Audit\tests\Audit.EntityFrameworkCore.Tests\Audit.EntityFrameworkCore.Tests.csproj" />
   </Folder>

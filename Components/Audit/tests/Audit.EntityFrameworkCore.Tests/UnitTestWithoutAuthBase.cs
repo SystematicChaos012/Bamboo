@@ -2,26 +2,26 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SharedKernel.Profiles;
+using Security;
 using System.Security.Claims;
 
 namespace Audit
 {
     public class UnitTestWithoutAuthBase : IDisposable
     {
-        protected ICurrentUser CurrentUser { get; }
+        protected IIdentityContext IdentityContext { get; }
         protected ServiceProvider ServiceProvider { get; }
         protected SqliteConnection SqliteConnection { get; }
         protected AuditDbContext Context { get; }
 
         public UnitTestWithoutAuthBase()
         {
-            CurrentUser = new FakeCurrentUser();
+            IdentityContext = new FakeCurrentUser();
             SqliteConnection = new SqliteConnection("DataSource=:memory:");
             SqliteConnection.Open();
 
             ServiceProvider = new ServiceCollection()
-                .AddScoped(_ => CurrentUser)
+                .AddScoped(_ => IdentityContext)
                 .BuildServiceProvider();
 
             Context = new AuditDbContext(
@@ -40,15 +40,16 @@ namespace Audit
             GC.SuppressFinalize(this);
         }
 
-        private class FakeCurrentUser : ICurrentUser
+        private class FakeCurrentUser : IIdentityContext
         {
-            public string? Id => null;
-
-            public string? Name => null;
-
             public bool IsAuthenticated => false;
 
-            public Claim? FindClaim(string claimType) => null;
+            public IEnumerable<string> FindClaims(string type)
+            {
+                throw new NotImplementedException();
+            }
+
+            public string? FindClaim(string type) => null;
         }
     }
 }
