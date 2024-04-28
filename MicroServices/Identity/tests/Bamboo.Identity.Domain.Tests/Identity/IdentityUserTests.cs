@@ -67,7 +67,7 @@ namespace Bamboo.Identity.Domain.Tests.Identity
         {
             var identityUser = CreateIdentityUser();
 
-            identityUser.EmailConfirm();
+            identityUser.ConfirmEmail();
 
             Assert.True(identityUser.EmailConfirmed);
         }
@@ -77,12 +77,12 @@ namespace Bamboo.Identity.Domain.Tests.Identity
         {
             var identityUser = Create();
 
-            Assert.Throws<IdentityUserEmailAlreadyConfirmedException>(identityUser.EmailConfirm);
+            Assert.Throws<IdentityUserEmailAlreadyConfirmedException>(identityUser.ConfirmEmail);
 
             static IdentityUser Create()
             {
                 var t = CreateIdentityUser();
-                t.EmailConfirm();
+                t.ConfirmEmail();
                 return t;
             }
         }
@@ -104,7 +104,7 @@ namespace Bamboo.Identity.Domain.Tests.Identity
         {
             var identityUser = Create();
 
-            identityUser.PhoneNumberConfirm();
+            identityUser.ConfirmPhoneNumber();
 
             Assert.True(identityUser.PhoneNumberConfirmed);
 
@@ -121,13 +121,13 @@ namespace Bamboo.Identity.Domain.Tests.Identity
         {
             var identityUser = Create();
 
-            Assert.Throws<IdentityUserPhoneNumberAlreadyConfirmedException>(identityUser.PhoneNumberConfirm);
+            Assert.Throws<IdentityUserPhoneNumberAlreadyConfirmedException>(identityUser.ConfirmPhoneNumber);
 
             static IdentityUser Create()
             {
                 var t = CreateIdentityUser();
                 t.ChangePhoneNumber("123456789");
-                t.PhoneNumberConfirm();
+                t.ConfirmPhoneNumber();
                 return t;
             }
         }
@@ -137,7 +137,7 @@ namespace Bamboo.Identity.Domain.Tests.Identity
         {
             var identityUser = CreateIdentityUser();
 
-            identityUser.AccessFail(FakeIdentityUserLockoutPolicy.Instance, out _);
+            identityUser.AccessFail();
 
             Assert.Equal(1, identityUser.AccessFailedCount);
         }
@@ -151,39 +151,6 @@ namespace Bamboo.Identity.Domain.Tests.Identity
 
             Assert.True(identityUser.LockoutEnabled);
             Assert.NotNull(identityUser.LockoutEnd);
-        }
-
-        [Fact]
-        public void IdentityUser_Lockout_When_AccessFailedCountMoreThanMaxFailedAccessAttempts()
-        {
-            var identityUser = Create();
-
-            identityUser.AccessFail(FakeIdentityUserLockoutPolicy.Instance, out var lockedout);
-
-            Assert.True(lockedout);
-
-            static IdentityUser Create()
-            {
-                var t = CreateIdentityUser(FakeIdentityUserLockoutPolicy.LockoutUserId);
-
-                return t;
-            }
-        }
-
-        [Fact]
-        public void IdentityUser_Lockout_When_AccessFailedCountLessThanMaxFailedAccessAttempts()
-        {
-            var identityUser = Create();
-
-            identityUser.AccessFail(FakeIdentityUserLockoutPolicy.Instance, out var lockedout);
-
-            Assert.False(lockedout);
-
-            static IdentityUser Create()
-            {
-                var t = CreateIdentityUser();
-                return t;
-            }
         }
 
         [Fact]
@@ -369,33 +336,19 @@ namespace Bamboo.Identity.Domain.Tests.Identity
 
         private static IdentityUser CreateIdentityUser()
         {
-            return CreateIdentityUser(new IdentityUserId(Guid.NewGuid()));
-        }
-
-        private static IdentityUser CreateIdentityUser(IdentityUserId id)
-        {
-            return new IdentityUser(id, "alice", "alice@bamboo.com");
+            return new IdentityUser(
+                new IdentityUserId(Guid.NewGuid()),
+                "alice",
+                "alice@bamboo.com");
         }
 
         class FakeIdentityUserLockoutPolicy : IIdentityUserLockoutPolicy
         {
             public static FakeIdentityUserLockoutPolicy Instance => new FakeIdentityUserLockoutPolicy();
 
-            public static IdentityUserId LockoutUserId = new IdentityUserId(Guid.Empty);
-
             public DateTimeOffset CalcuteLockout(IdentityUserId id)
             {
                 return DateTimeOffset.UtcNow.AddMinutes(5);
-            }
-
-            public bool ShouldLockout(IdentityUserId id)
-            {
-                if (LockoutUserId == id)
-                {
-                    return true;
-                }
-
-                return false;
             }
         }
     }

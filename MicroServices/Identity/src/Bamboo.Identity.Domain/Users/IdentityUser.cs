@@ -134,20 +134,6 @@ namespace Bamboo.Identity
         }
 
         /// <summary>
-        /// 邮箱确认
-        /// </summary>
-        /// <exception cref="IdentityUserEmailAlreadyConfirmedException">邮箱已确认异常</exception>
-        public void EmailConfirm()
-        {
-            if (EmailConfirmed)
-            {
-                throw new IdentityUserEmailAlreadyConfirmedException();
-            }
-
-            RaiseEvent(new IdentityUserEmailConfirmedDomainEvent(Id));
-        }
-
-        /// <summary>
         /// 更改密码
         /// </summary>
         /// <param name="passwordHash">密码</param>
@@ -175,10 +161,24 @@ namespace Bamboo.Identity
         }
 
         /// <summary>
+        /// 邮箱确认
+        /// </summary>
+        /// <exception cref="IdentityUserEmailAlreadyConfirmedException">邮箱已确认异常</exception>
+        public void ConfirmEmail()
+        {
+            if (EmailConfirmed)
+            {
+                throw new IdentityUserEmailAlreadyConfirmedException();
+            }
+
+            RaiseEvent(new IdentityUserEmailConfirmedDomainEvent(Id));
+        }
+
+        /// <summary>
         /// 电话号码确认
         /// </summary>
         /// <exception cref="IdentityUserPhoneNumberAlreadyConfirmedException">电话已存在异常</exception>
-        public void PhoneNumberConfirm()
+        public void ConfirmPhoneNumber()
         {
             if (PhoneNumberConfirmed)
             {
