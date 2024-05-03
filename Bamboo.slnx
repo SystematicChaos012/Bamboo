@@ -22,7 +22,7 @@
   <Folder Name="/MicroServices/" />
   <Folder Name="/Components/Security/tests/" />
   <Folder Name="/Components/Security/src/">
-    <Project Path="Components\Security\src\Security\Security.csproj" Type="Classic C#" />
+    <Project Path="Components\Security\src\Security\Security.csproj" />
   </Folder>
   <Folder Name="/Components/Security/" />
   <Folder Name="/Components/Audit/tests/">
@@ -37,4 +37,5 @@
   <Folder Name="/Common/">
     <Project Path="Common\SharedKernel\SharedKernel.csproj" />
   </Folder>
+</Solution>lder>
 </Solution>
