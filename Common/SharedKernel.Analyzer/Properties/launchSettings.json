@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "AnalyzerDebugger": {
-      "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\SharedKernel.Analyzer.Debugger\\SharedKernel.Analyzer.Debugger.csproj"
-    }
-  }
-}
