@@ -1,4 +1,6 @@
-﻿namespace SharedKernel.Ddd.Events;
+﻿using SharedKernel.Ddd.Events;
+
+namespace SharedKernel.Ddd.Notification;
 
 public abstract class EventNotifier
 {

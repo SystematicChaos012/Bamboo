@@ -15,8 +15,4 @@
     <ProjectReference Include="..\SharedKernel.Analyzer\SharedKernel.Analyzer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Ddd\Collections\Generic\" />
-  </ItemGroup>
-
 </Project>

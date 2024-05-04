@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "Common\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.Analyzer", "Common\SharedKernel.Analyzer\SharedKernel.Analyzer.csproj", "{34566904-352D-4DE5-B9CD-D0956DF4BF7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyzerDebugger", "Common\AnalyzerDebugger\AnalyzerDebugger.csproj", "{3FC50D6F-9941-49D9-AB51-765011BDF7B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.Analyzer.Debugger", "Common\SharedKernel.Analyzer.Debugger\SharedKernel.Analyzer.Debugger.csproj", "{3FC50D6F-9941-49D9-AB51-765011BDF7B7}"
 EndProject
 Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
