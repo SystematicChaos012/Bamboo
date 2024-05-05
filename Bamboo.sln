@@ -2,7 +2,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34818.151
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{881589EE-639B-0A35-DBCE-5D94E4FC90C0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B4FCCD15-987F-4D99-AC32-02954C02D84C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3A78BC08-190E-4365-8BB1-3EA3298B2B01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "src\SharedKernel\SharedKernel.csproj", "{CCC546C8-127E-40C9-8754-4039ABCF4155}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6B6C23F4-B016-4271-A017-6A2D52C76AAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{927406ED-AC91-4D93-A38F-606FBF255E3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{87B1648F-9878-48E2-B73F-B66880FB5AD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Core", "src\Blog.Core\Blog.Core.csproj", "{FBEF081B-D243-4AE6-9B64-8210D1E7A3AA}"
 EndProject
 Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
@@ -13,10 +25,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCC546C8-127E-40C9-8754-4039ABCF4155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCC546C8-127E-40C9-8754-4039ABCF4155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCC546C8-127E-40C9-8754-4039ABCF4155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCC546C8-127E-40C9-8754-4039ABCF4155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBEF081B-D243-4AE6-9B64-8210D1E7A3AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBEF081B-D243-4AE6-9B64-8210D1E7A3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBEF081B-D243-4AE6-9B64-8210D1E7A3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBEF081B-D243-4AE6-9B64-8210D1E7A3AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{6B6C23F4-B016-4271-A017-6A2D52C76AAB} = {B4FCCD15-987F-4D99-AC32-02954C02D84C}
+		{CCC546C8-127E-40C9-8754-4039ABCF4155} = {6B6C23F4-B016-4271-A017-6A2D52C76AAB}
+		{927406ED-AC91-4D93-A38F-606FBF255E3E} = {B4FCCD15-987F-4D99-AC32-02954C02D84C}
+		{87B1648F-9878-48E2-B73F-B66880FB5AD1} = {927406ED-AC91-4D93-A38F-606FBF255E3E}
+		{FBEF081B-D243-4AE6-9B64-8210D1E7A3AA} = {87B1648F-9878-48E2-B73F-B66880FB5AD1}
 	EndGlobalSection
 EndGlobal
