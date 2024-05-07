@@ -1,4 +1,5 @@
 ﻿using Blog.Core.Topics.DomainEvents;
+using Blog.Core.Topics.DomainExceptions;
 using Blog.Core.Topics.Entities;
 using Blog.Core.Topics.ValueObjects;
 using SharedKernel.Domain;
@@ -50,9 +51,25 @@ public sealed partial class Topic : AggregateRoot
         // 作者已存在
         if (Authors.Any(x => x.IdentityUserId == identityUserId))
         {
-            return;
+            TopicThrowHelper.AuthorAddedTwice();
         }
 
         Raise(new TopicAuthorAddedDomainEvent(Id, topicAuthorId, identityUserId, identityUserName));
+    }
+
+    /// <summary>
+    /// 删除作者
+    /// </summary>
+    /// <param name="topicAuthorId">主键 Id</param>
+    public void RemoveAuthor(TopicAuthorId topicAuthorId)
+    {
+        // 作者未存在
+        var author = Authors.FirstOrDefault(x => x.Id == topicAuthorId);
+        if (author is null)
+        {
+            TopicThrowHelper.AuthorNotFound();
+        }
+        
+        Raise(new TopicAuthorRemovedDomainEvent(Id, topicAuthorId));
     }
 }
