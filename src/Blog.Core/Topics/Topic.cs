@@ -29,7 +29,7 @@ public sealed partial class Topic : AggregateRoot
     /// <summary>
     /// 主题作者
     /// </summary>
-    public ICollection<TopicAuthor> Authors { get; private set; } = [];
+    public ICollection<TopicAuthor> Authors { get; } = [];
 
     /// <summary>
     /// 创建主题
@@ -39,6 +39,20 @@ public sealed partial class Topic : AggregateRoot
     /// <param name="content">内容</param>
     public Topic(TopicId id, string title, string content) => 
         Raise(new TopicCreatedDomainEvent(id, title, content));
+
+    /// <summary>
+    /// 修改标题
+    /// </summary>
+    /// <param name="title">新标题</param>
+    public void ModifyTitle(string title) => 
+        Raise(new TopicTitleModifiedDomainEvent(Id, Title, title));
+
+    /// <summary>
+    /// 修改内容
+    /// </summary>
+    /// <param name="content">新内容</param>
+    public void ModifyContent(string content) =>
+        Raise(new TopicContentModifiedDomainEvent(Id, Content, content));
 
     /// <summary>
     /// 添加作者
