@@ -5,7 +5,7 @@ using SharedKernel.Domain;
 
 namespace SharedKernel.Tests;
 
-public class AggregateRootTests
+public sealed class AggregateRootTests
 {
     [Fact]
     public void AggregateRoot_Create()

@@ -6,7 +6,7 @@ namespace Blog.Core.Topics.Entities;
 /// <summary>
 /// 主题作者
 /// </summary>
-public class TopicAuthor : Entity
+public sealed class TopicAuthor : Entity
 {
     /// <summary>
     /// 主键
@@ -21,28 +21,28 @@ public class TopicAuthor : Entity
     /// <summary>
     /// 用户 Id
     /// </summary>
-    public IdentityUserId IdentityUserId { get; private set; }
+    public AuthorId AuthorId { get; private set; }
 
     /// <summary>
     /// 用户名称
     /// </summary>
-    public string IdentityUserName { get; private set; }
+    public string AuthorName { get; private set; }
 
     /// <summary>
     /// 主题
     /// </summary>
-    public virtual Topic Topic { get; } = null!;
+    public Topic Topic { get; } = null!;
     
     /// <summary>
     /// 创建主题作者
     /// </summary>
     /// <param name="topicId">主题 Id</param>
     /// <param name="topicAuthorId">主键</param>
-    /// <param name="identityUserId">用户 Id</param>
-    /// <param name="identityUserName">用户名称</param>
-    public TopicAuthor(TopicId topicId, TopicAuthorId topicAuthorId, IdentityUserId identityUserId, string identityUserName)
+    /// <param name="authorId">用户 Id</param>
+    /// <param name="authorName">用户名称</param>
+    public TopicAuthor(TopicId topicId, TopicAuthorId topicAuthorId, AuthorId authorId, string authorName)
     {
-        (Id, TopicId, IdentityUserId, IdentityUserName) = (topicAuthorId, topicId, identityUserId, identityUserName);
+        (Id, TopicId, AuthorId, AuthorName) = (topicAuthorId, topicId, authorId, authorName);
     }
 
     /// <inheritdoc />

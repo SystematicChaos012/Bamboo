@@ -44,17 +44,17 @@ public sealed partial class Topic : AggregateRoot
     /// 添加作者
     /// </summary>
     /// <param name="topicAuthorId">主键 Id</param>
-    /// <param name="identityUserId">用户 Id</param>
-    /// <param name="identityUserName">用户名称</param>
-    public void AddAuthor(TopicAuthorId topicAuthorId, IdentityUserId identityUserId, string identityUserName)
+    /// <param name="authorId">用户 Id</param>
+    /// <param name="authorName">用户名称</param>
+    public void AddAuthor(TopicAuthorId topicAuthorId, AuthorId authorId, string authorName)
     {
         // 作者已存在
-        if (Authors.Any(x => x.IdentityUserId == identityUserId))
+        if (Authors.Any(x => x.AuthorId == authorId))
         {
             TopicThrowHelper.AuthorAddedTwice();
         }
 
-        Raise(new TopicAuthorAddedDomainEvent(Id, topicAuthorId, identityUserId, identityUserName));
+        Raise(new TopicAuthorAddedDomainEvent(Id, topicAuthorId, authorId, authorName));
     }
 
     /// <summary>
