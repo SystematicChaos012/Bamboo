@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using SharedKernel.Domain;
 
 namespace Blog.Core.Topics.DomainExceptions;
@@ -20,6 +21,10 @@ public static class TopicThrowHelper
         throw new DomainException(AuthorAddedTwiceCode, "主题作者重复");
     }
 
+    /// <summary>
+    /// 作者未找到
+    /// </summary>
+    /// <exception cref="DomainException"></exception>
     [DoesNotReturn]
     public static void AuthorNotFound()
     {
