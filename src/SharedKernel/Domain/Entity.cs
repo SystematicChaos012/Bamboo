@@ -3,10 +3,22 @@
 /// <summary>
 /// 实体
 /// </summary>
-public abstract class Entity
+public class Entity
 {
     /// <summary>
-    /// 触发事件
+    /// 领域事件
     /// </summary>
-    public abstract void Raise<T>(T domainEvent) where T : DomainEvent;
+    private readonly List<DomainEvent> _domainEvents = [];
+
+    /// <summary>
+    /// 提交事件
+    /// </summary>
+    public virtual void Raise<T>(T domainEvent) where T : DomainEvent
+    {
+        _domainEvents.Add(domainEvent);
+        if (this is IDomainEventApplier<T> applier)
+        {
+            applier.Apply(domainEvent);
+        }
+    }
 }
