@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B4FCCD15-987
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3A78BC08-190E-4365-8BB1-3EA3298B2B01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "src\SharedKernel\SharedKernel.csproj", "{CCC546C8-127E-40C9-8754-4039ABCF4155}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "src\SharedKernel\SharedKernel.csproj", "{CCC546C8-127E-40C9-8754-4039ABCF4155}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{6B6C23F4-B016-4271-A017-6A2D52C76AAB}"
 EndProject
@@ -14,17 +14,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{92
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{87B1648F-9878-48E2-B73F-B66880FB5AD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Core", "src\Blog.Core\Blog.Core.csproj", "{FBEF081B-D243-4AE6-9B64-8210D1E7A3AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Core", "src\Blog.Core\Blog.Core.csproj", "{FBEF081B-D243-4AE6-9B64-8210D1E7A3AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{DCC078F1-0888-4032-AABF-7A93B8D8BCC5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{6BD48F35-700D-4A76-B052-BAEC18AD0EEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Core.Tests", "tests\Blog.Core.Tests\Blog.Core.Tests.csproj", "{41441ADF-50F1-44E9-8136-3B5163E54221}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Core.Tests", "tests\Blog.Core.Tests\Blog.Core.Tests.csproj", "{41441ADF-50F1-44E9-8136-3B5163E54221}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B3DD4B9D-8577-44F6-BD64-A38783406E48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.Tests", "tests\SharedKernel.Tests\SharedKernel.Tests.csproj", "{7BA2A3C5-7B6A-4081-8C6D-3FEDE81BE114}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel.Tests", "tests\SharedKernel.Tests\SharedKernel.Tests.csproj", "{7BA2A3C5-7B6A-4081-8C6D-3FEDE81BE114}"
 EndProject
 Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
