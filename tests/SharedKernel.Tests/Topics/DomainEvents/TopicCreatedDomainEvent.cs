@@ -6,4 +6,4 @@ namespace Blog.Core.Topics.DomainEvents;
 /// <summary>
 /// 主题创建
 /// </summary>
-public sealed record class TopicCreatedDomainEvent(TopicId TopicId, string Title, string Content) : DomainEvent;
+public sealed record class TopicCreatedDomainEvent(TestTopicId TopicId, string Title, string Content) : DomainEvent;

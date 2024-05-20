@@ -7,22 +7,22 @@ namespace Blog.Core.Topics.Entities;
 /// <summary>
 /// 主题作者
 /// </summary>
-public sealed class TopicAuthor : Entity
+public sealed class TestTopicAuthor : Entity
 {
     /// <summary>
     /// 主题作者 Id
     /// </summary>
-    public TopicAuthorId Id { get; private set; } = default!;
+    public TestTopicAuthorId Id { get; private set; } = default!;
 
     /// <summary>
     /// 主题 Id
     /// </summary>
-    public TopicId TopicId { get; private set; } = default!;
+    public TestTopicId TopicId { get; private set; } = default!;
 
     /// <summary>
     /// 作者 Id
     /// </summary>
-    public AuthorId AuthorId { get; private set; } = default!;
+    public TestAuthorId AuthorId { get; private set; } = default!;
 
     /// <summary>
     /// 作者名称
@@ -33,7 +33,7 @@ public sealed class TopicAuthor : Entity
     /// <param name="topicId">主题 Id</param>
     /// <param name="authorId">作者 Id</param>
     /// <param name="authorName">作者名称</param>
-    public TopicAuthor(TopicAuthorId id, TopicId topicId, AuthorId authorId, string authorName) =>
+    public TestTopicAuthor(TestTopicAuthorId id, TestTopicId topicId, TestAuthorId authorId, string authorName) =>
         Raise(new TopicAuthorCreatedDomainEvent(id, topicId, authorId, authorName));
 
     /// <summary>
@@ -43,8 +43,8 @@ public sealed class TopicAuthor : Entity
     /// <param name="topicId">主题 Id</param>
     /// <param name="authorId">作者 Id</param>
     /// <param name="authorName">作者名称</param>
-    /// <returns><see cref="TopicAuthor"/></returns>
-    public static TopicAuthor Create(TopicAuthorId id, TopicId topicId, AuthorId authorId, string authorName) => 
+    /// <returns><see cref="TestTopicAuthor"/></returns>
+    public static TestTopicAuthor Create(TestTopicAuthorId id, TestTopicId topicId, TestAuthorId authorId, string authorName) => 
         new(id, topicId, authorId, authorName);
 
     /// <inheritdoc/>

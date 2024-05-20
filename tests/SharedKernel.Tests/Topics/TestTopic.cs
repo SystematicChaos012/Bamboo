@@ -9,12 +9,12 @@ namespace Blog.Core.Topics;
 /// <summary>
 /// 主题
 /// </summary>
-public sealed class Topic : AggregateRoot
+public sealed class TestTopic : AggregateRoot
 {
     /// <summary>
     /// 主键
     /// </summary>
-    public TopicId Id { get; private set; }
+    public TestTopicId Id { get; private set; }
 
     /// <summary>
     /// 标题
@@ -29,9 +29,9 @@ public sealed class Topic : AggregateRoot
     /// <summary>
     /// 作者
     /// </summary>
-    public ICollection<TopicAuthor> Authors { get; }
+    public ICollection<TestTopicAuthor> Authors { get; }
 
-    private Topic() => Authors = CreateTrackCollection<TopicAuthor>();
+    private TestTopic() => Authors = CreateTrackCollection<TestTopicAuthor>();
 
     /// <summary>
     /// 创建主题
@@ -39,7 +39,7 @@ public sealed class Topic : AggregateRoot
     /// <param name="id">主键 Id</param>
     /// <param name="title">标题</param>
     /// <param name="content">内容</param>
-    public Topic(TopicId id, string title, string content) : this() => 
+    public TestTopic(TestTopicId id, string title, string content) : this() => 
         Raise(new TopicCreatedDomainEvent(id, title, content));
 
     /// <summary>
